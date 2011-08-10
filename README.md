@@ -6,8 +6,8 @@ Since iOS 3.2, you can use [custom fonts](http://developer.apple.com/library/ios
 If your project contains nibs with a lot of labels, it becomes tedious to setup an outlet for every label and change the font in the code for each outlet. Instead choose a font that you won't be using anywhere in your app, e.g. *Arial* and use it in Interface Builder. Then create a mapping from Arial to your custom font, e.g. *Caviar Dreams* and let **FontReplacer** handle the replacement.
 
 Here is what you see in Interface Builder vs what you see at runtime:  
-![Font in Interface Builder](https://github.com/0xced/FontReplacer/Screenshots/Font-InterfaceBuilder.png "Font in Interface Builder")
-![Font at Runtime](https://github.com/0xced/FontReplacer/Screenshots/Font-Runtime.png "Font at Runtime")
+![Font in Interface Builder](https://github.com/0xced/FontReplacer/raw/master/Screenshots/Font-InterfaceBuilder.png "Font in Interface Builder")
+![Font at Runtime](https://github.com/0xced/FontReplacer/raw/master/Screenshots/Font-Runtime.png "Font at Runtime")
 
 Usage
 =====
