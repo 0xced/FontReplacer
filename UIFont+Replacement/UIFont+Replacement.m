@@ -15,8 +15,10 @@ static NSDictionary *replacementDictionary = nil;
 
 static void initializeReplacementFonts()
 {
-	if (replacementDictionary)
+	static BOOL initialized = NO;
+	if (initialized)
 		return;
+	initialized = YES;
 	
 	NSDictionary *replacementDictionary = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"ReplacementFonts"];
 	[UIFont setReplacementDictionary:replacementDictionary];
