@@ -81,6 +81,7 @@
 				DA9861FB13F01BCE006DEC9A /* Products */,
 			);
 			sourceTree = "<group>";
+			usesTabs = 1;
 		};
 		DA9861FB13F01BCE006DEC9A /* Products */ = {
 			isa = PBXGroup;
