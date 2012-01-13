@@ -68,8 +68,13 @@ static void initializeReplacementFonts()
 	}
     
 	NSString *replacedFontName = [replacedFontNames objectAtIndex:0];
-	NSNumber *traits = [self valueForKey:@"traits"];
-	UIFont *replacedFont = [UIFont replacement_fontWithName:replacedFontName size:self.pointSize traits:[traits unsignedIntegerValue]];
+	
+	// Trick: To get to the original font, remove the replacement dictionary temporarily
+	NSDictionary *originalReplacementDictionary = [UIFont replacementDictionary];
+	[UIFont setReplacementDictionary:nil];
+	UIFont *replacedFont = [UIFont fontWithName:replacedFontName size:self.pointSize];
+	[UIFont setReplacementDictionary:originalReplacementDictionary];
+	
 	return [replacedFont replacement_ascender];
 }
 
