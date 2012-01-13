@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6FB0365D14BFFEC900626500 /* AdjustmentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FB0365C14BFFEC900626500 /* AdjustmentViewController.m */; };
+		6FB0366014BFFEF500626500 /* AdjustmentViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6FB0365F14BFFEF500626500 /* AdjustmentViewController.xib */; };
+		6FB0366414C0030200626500 /* OBSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FB0366314C0030200626500 /* OBSlider.m */; };
 		DA336B6B13F01F5D00A60EA6 /* DemoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DA336B6A13F01F5D00A60EA6 /* DemoViewController.xib */; };
 		DA4C182113F446120015A600 /* FontsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DA4C181F13F446110015A600 /* FontsViewController.m */; };
 		DA4C182813F4506A0015A600 /* ComparatorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DA4C182613F450680015A600 /* ComparatorViewController.m */; };
@@ -24,6 +27,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		6FB0365B14BFFEC900626500 /* AdjustmentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AdjustmentViewController.h; sourceTree = "<group>"; };
+		6FB0365C14BFFEC900626500 /* AdjustmentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AdjustmentViewController.m; sourceTree = "<group>"; };
+		6FB0365F14BFFEF500626500 /* AdjustmentViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AdjustmentViewController.xib; sourceTree = "<group>"; };
+		6FB0366214C0030200626500 /* OBSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OBSlider.h; sourceTree = "<group>"; };
+		6FB0366314C0030200626500 /* OBSlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OBSlider.m; sourceTree = "<group>"; };
 		DA336B6A13F01F5D00A60EA6 /* DemoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DemoViewController.xib; sourceTree = "<group>"; };
 		DA4C181E13F446110015A600 /* FontsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FontsViewController.h; sourceTree = "<group>"; };
 		DA4C181F13F446110015A600 /* FontsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FontsViewController.m; sourceTree = "<group>"; };
@@ -61,6 +69,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6FB0366114C0030200626500 /* OBSlider */ = {
+			isa = PBXGroup;
+			children = (
+				6FB0366214C0030200626500 /* OBSlider.h */,
+				6FB0366314C0030200626500 /* OBSlider.m */,
+			);
+			name = OBSlider;
+			path = "FontReplacer Demo/OBSlider";
+			sourceTree = "<group>";
+		};
 		DA6C855113F02703007060AF /* CaviarDreams */ = {
 			isa = PBXGroup;
 			children = (
@@ -75,6 +93,7 @@
 		DA9861EF13F01BCD006DEC9A = {
 			isa = PBXGroup;
 			children = (
+				6FB0366114C0030200626500 /* OBSlider */,
 				DA98621913F01E55006DEC9A /* UIFont+Replacement */,
 				DA98620213F01BCE006DEC9A /* FontReplacer Demo */,
 				DA9861FD13F01BCE006DEC9A /* Frameworks */,
@@ -103,6 +122,9 @@
 		DA98620213F01BCE006DEC9A /* FontReplacer Demo */ = {
 			isa = PBXGroup;
 			children = (
+				6FB0365B14BFFEC900626500 /* AdjustmentViewController.h */,
+				6FB0365C14BFFEC900626500 /* AdjustmentViewController.m */,
+				6FB0365F14BFFEF500626500 /* AdjustmentViewController.xib */,
 				DA98620B13F01BCE006DEC9A /* AppDelegate.h */,
 				DA98620C13F01BCE006DEC9A /* AppDelegate.m */,
 				DA336B6A13F01F5D00A60EA6 /* DemoViewController.xib */,
@@ -195,6 +217,7 @@
 				DA6C855913F02703007060AF /* CaviarDreams_BoldItalic.ttf in Resources */,
 				DA6C855A13F02703007060AF /* CaviarDreams_Italic.ttf in Resources */,
 				DA6C856513F035EA007060AF /* Icon@2x.png in Resources */,
+				6FB0366014BFFEF500626500 /* AdjustmentViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -211,6 +234,8 @@
 				DA4C182113F446120015A600 /* FontsViewController.m in Sources */,
 				DA4C182813F4506A0015A600 /* ComparatorViewController.m in Sources */,
 				DADAB65A13F5DDB0000301E6 /* ComparisonResult.m in Sources */,
+				6FB0365D14BFFEC900626500 /* AdjustmentViewController.m in Sources */,
+				6FB0366414C0030200626500 /* OBSlider.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

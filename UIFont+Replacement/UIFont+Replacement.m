@@ -56,7 +56,7 @@ static void initializeReplacementFonts()
 	return [self replacement_fontWithName:replacementFontName ?: fontName size:fontSize traits:traits];
 }
 
-- (CGFloat)replacement_ascender
+- (CGFloat) replacement_ascender
 {
 	NSString *fontName = [self fontName];
 	CGFloat ascender = [self replacement_ascender];

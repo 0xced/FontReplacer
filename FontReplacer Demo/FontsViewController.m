@@ -13,7 +13,7 @@
 
 - (id) init
 {
-	if (!(self = [self initWithStyle:UITableViewStylePlain]))
+	if (!(self = [super initWithStyle:UITableViewStylePlain]))
 		return nil;
 	
 	familyNames = [[[UIFont familyNames] sortedArrayUsingSelector:@selector(localizedCompare:)] retain];
