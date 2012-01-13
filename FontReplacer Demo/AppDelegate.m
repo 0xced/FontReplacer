@@ -39,15 +39,20 @@
 
 - (BOOL) tabBarController:(UITabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController
 {
-	if (tabBarController.selectedIndex == 0)
+	if ([viewController isKindOfClass:[FontsViewController class]]) 
 	{
 		self.originalReplacementDictionary = [UIFont replacementDictionary];
-		[UIFont setReplacementDictionary:nil];
+		[UIFont setReplacementDictionary:nil];	
 	}
-	else
+	else 
 	{
-		[UIFont setReplacementDictionary:self.originalReplacementDictionary];
+		if (self.originalReplacementDictionary) 
+		{
+			[UIFont setReplacementDictionary:self.originalReplacementDictionary];
+			self.originalReplacementDictionary = nil;
+		}
 	}
+	
 	return YES;
 }
 

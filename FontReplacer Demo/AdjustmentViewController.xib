@@ -64,7 +64,7 @@
 							<int key="traits">0</int>
 							<double key="pointSize">18</double>
 						</object>
-						<object class="NSFont" key="IBUIFont" id="769602128">
+						<object class="NSFont" key="IBUIFont" id="543249020">
 							<string key="NSName">ArialMT</string>
 							<double key="NSSize">18</double>
 							<int key="NSfFlags">16</int>
@@ -92,7 +92,7 @@
 						<float key="IBUIMinimumFontSize">12</float>
 						<int key="IBUITextAlignment">1</int>
 						<reference key="IBUIFontDescription" ref="407548226"/>
-						<reference key="IBUIFont" ref="769602128"/>
+						<reference key="IBUIFont" ref="543249020"/>
 					</object>
 					<object class="IBUILabel" id="229875284">
 						<reference key="NSNextResponder" ref="636436987"/>
@@ -119,7 +119,7 @@
 							<int key="traits">1</int>
 							<double key="pointSize">18</double>
 						</object>
-						<object class="NSFont" key="IBUIFont" id="945559494">
+						<object class="NSFont" key="IBUIFont" id="112706710">
 							<string key="NSName">Arial-ItalicMT</string>
 							<double key="NSSize">18</double>
 							<int key="NSfFlags">16</int>
@@ -144,7 +144,7 @@
 						<float key="IBUIMinimumFontSize">12</float>
 						<int key="IBUITextAlignment">1</int>
 						<reference key="IBUIFontDescription" ref="524519475"/>
-						<reference key="IBUIFont" ref="945559494"/>
+						<reference key="IBUIFont" ref="112706710"/>
 					</object>
 					<object class="IBUILabel" id="749176089">
 						<reference key="NSNextResponder" ref="636436987"/>
@@ -171,7 +171,7 @@
 							<int key="traits">2</int>
 							<double key="pointSize">18</double>
 						</object>
-						<object class="NSFont" key="IBUIFont" id="536945228">
+						<object class="NSFont" key="IBUIFont" id="316256133">
 							<string key="NSName">Arial-BoldMT</string>
 							<double key="NSSize">18</double>
 							<int key="NSfFlags">16</int>
@@ -196,7 +196,7 @@
 						<float key="IBUIMinimumFontSize">12</float>
 						<int key="IBUITextAlignment">1</int>
 						<reference key="IBUIFontDescription" ref="114226241"/>
-						<reference key="IBUIFont" ref="536945228"/>
+						<reference key="IBUIFont" ref="316256133"/>
 					</object>
 					<object class="IBUILabel" id="79486392">
 						<reference key="NSNextResponder" ref="636436987"/>
@@ -223,7 +223,7 @@
 							<int key="traits">3</int>
 							<double key="pointSize">18</double>
 						</object>
-						<object class="NSFont" key="IBUIFont" id="815916628">
+						<object class="NSFont" key="IBUIFont" id="724496027">
 							<string key="NSName">Arial-BoldItalicMT</string>
 							<double key="NSSize">18</double>
 							<int key="NSfFlags">16</int>
@@ -248,7 +248,7 @@
 						<float key="IBUIMinimumFontSize">12</float>
 						<int key="IBUITextAlignment">1</int>
 						<reference key="IBUIFontDescription" ref="58447288"/>
-						<reference key="IBUIFont" ref="815916628"/>
+						<reference key="IBUIFont" ref="724496027"/>
 					</object>
 					<object class="IBUISlider" id="110323470">
 						<reference key="NSNextResponder" ref="636436987"/>
@@ -262,7 +262,7 @@
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						<int key="IBUIContentHorizontalAlignment">0</int>
 						<int key="IBUIContentVerticalAlignment">0</int>
-						<float key="IBUIValue">0.5</float>
+						<float key="IBUIMinValue">-1</float>
 					</object>
 					<object class="IBUISlider" id="949864424">
 						<reference key="NSNextResponder" ref="636436987"/>
@@ -276,8 +276,8 @@
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						<int key="IBUIContentHorizontalAlignment">0</int>
 						<int key="IBUIContentVerticalAlignment">0</int>
-						<float key="IBUIValue">18</float>
-						<float key="IBUIMinValue">5</float>
+						<float key="IBUIValue">33</float>
+						<float key="IBUIMinValue">6</float>
 						<float key="IBUIMaxValue">60</float>
 					</object>
 				</array>
@@ -310,35 +310,11 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">factorSlider</string>
-						<reference key="source" ref="841351856"/>
-						<reference key="destination" ref="110323470"/>
-					</object>
-					<int key="connectionID">29</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">pointSizeSlider</string>
 						<reference key="source" ref="841351856"/>
 						<reference key="destination" ref="949864424"/>
 					</object>
 					<int key="connectionID">30</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">font1NormalLabel</string>
-						<reference key="source" ref="841351856"/>
-						<reference key="destination" ref="974726284"/>
-					</object>
-					<int key="connectionID">33</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">font2NormalLabel</string>
-						<reference key="source" ref="841351856"/>
-						<reference key="destination" ref="426388607"/>
-					</object>
-					<int key="connectionID">34</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
@@ -389,22 +365,46 @@
 					<int key="connectionID">40</int>
 				</object>
 				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">offsetSlider</string>
+						<reference key="source" ref="841351856"/>
+						<reference key="destination" ref="110323470"/>
+					</object>
+					<int key="connectionID">41</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">font2NormalLabel</string>
+						<reference key="source" ref="841351856"/>
+						<reference key="destination" ref="426388607"/>
+					</object>
+					<int key="connectionID">34</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">font1NormalLabel</string>
+						<reference key="source" ref="841351856"/>
+						<reference key="destination" ref="974726284"/>
+					</object>
+					<int key="connectionID">33</int>
+				</object>
+				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
-						<string key="label">factorChanged:</string>
+						<string key="label">settingsChanged:</string>
 						<reference key="source" ref="110323470"/>
 						<reference key="destination" ref="841351856"/>
 						<int key="IBEventType">13</int>
 					</object>
-					<int key="connectionID">31</int>
+					<int key="connectionID">42</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
-						<string key="label">pointSizeChanged:</string>
+						<string key="label">settingsChanged:</string>
 						<reference key="source" ref="949864424"/>
 						<reference key="destination" ref="841351856"/>
 						<int key="IBEventType">13</int>
 					</object>
-					<int key="connectionID">32</int>
+					<int key="connectionID">43</int>
 				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -517,29 +517,25 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">40</int>
+			<int key="maxID">45</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
 				<object class="IBPartialClassDescription">
 					<string key="className">AdjustmentViewController</string>
 					<string key="superclassName">UIViewController</string>
-					<dictionary class="NSMutableDictionary" key="actions">
-						<string key="factorChanged:">id</string>
-						<string key="pointSizeChanged:">id</string>
-					</dictionary>
-					<dictionary class="NSMutableDictionary" key="actionInfosByName">
-						<object class="IBActionInfo" key="factorChanged:">
-							<string key="name">factorChanged:</string>
+					<object class="NSMutableDictionary" key="actions">
+						<string key="NS.key.0">settingsChanged:</string>
+						<string key="NS.object.0">id</string>
+					</object>
+					<object class="NSMutableDictionary" key="actionInfosByName">
+						<string key="NS.key.0">settingsChanged:</string>
+						<object class="IBActionInfo" key="NS.object.0">
+							<string key="name">settingsChanged:</string>
 							<string key="candidateClassName">id</string>
 						</object>
-						<object class="IBActionInfo" key="pointSizeChanged:">
-							<string key="name">pointSizeChanged:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-					</dictionary>
+					</object>
 					<dictionary class="NSMutableDictionary" key="outlets">
-						<string key="factorSlider">OBSlider</string>
 						<string key="font1BoldItalicLabel">UILabel</string>
 						<string key="font1BoldLabel">UILabel</string>
 						<string key="font1ItalicLabel">UILabel</string>
@@ -548,13 +544,10 @@
 						<string key="font2BoldLabel">UILabel</string>
 						<string key="font2ItalicLabel">UILabel</string>
 						<string key="font2NormalLabel">UILabel</string>
+						<string key="offsetSlider">OBSlider</string>
 						<string key="pointSizeSlider">UISlider</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<object class="IBToOneOutletInfo" key="factorSlider">
-							<string key="name">factorSlider</string>
-							<string key="candidateClassName">OBSlider</string>
-						</object>
 						<object class="IBToOneOutletInfo" key="font1BoldItalicLabel">
 							<string key="name">font1BoldItalicLabel</string>
 							<string key="candidateClassName">UILabel</string>
@@ -586,6 +579,10 @@
 						<object class="IBToOneOutletInfo" key="font2NormalLabel">
 							<string key="name">font2NormalLabel</string>
 							<string key="candidateClassName">UILabel</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="offsetSlider">
+							<string key="name">offsetSlider</string>
+							<string key="candidateClassName">OBSlider</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="pointSizeSlider">
 							<string key="name">pointSizeSlider</string>

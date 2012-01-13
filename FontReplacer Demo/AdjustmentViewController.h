@@ -34,10 +34,9 @@
 @property (nonatomic, retain) IBOutlet UILabel *font1BoldItalicLabel;
 @property (nonatomic, retain) IBOutlet UILabel *font2BoldItalicLabel;
 
-@property (nonatomic, retain) IBOutlet OBSlider *factorSlider;
+@property (nonatomic, retain) IBOutlet OBSlider *offsetSlider;
 @property (nonatomic, retain) IBOutlet UISlider *pointSizeSlider;
 
-- (IBAction)factorChanged:(id)sender;
-- (IBAction)pointSizeChanged:(id)sender;
+- (IBAction) settingsChanged:(id)sender;
 
 @end

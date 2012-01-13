@@ -12,6 +12,7 @@
 @implementation UIFont (Replacement)
 
 static NSDictionary *replacementDictionary = nil;
+static NSDictionary *offsetDictionary = nil;
 
 static void initializeReplacementFonts()
 {
@@ -22,6 +23,9 @@ static void initializeReplacementFonts()
 	
 	NSDictionary *replacementDictionary = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"ReplacementFonts"];
 	[UIFont setReplacementDictionary:replacementDictionary];
+	
+	NSDictionary *offsetDictionary = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"ReplacementOffsets"];
+	[UIFont setOffsetDictionary:offsetDictionary];
 }
 
 + (void) load
@@ -40,6 +44,16 @@ static void initializeReplacementFonts()
 	Method replacementAscender_ = class_getInstanceMethod([UIFont class], @selector(replacement_ascender));
 	if (ascender_ && replacementAscender_ && strcmp(method_getTypeEncoding(ascender_), method_getTypeEncoding(replacementAscender_)) == 0)
 		method_exchangeImplementations(ascender_, replacementAscender_);
+}
+
++ (CGFloat) offsetForFontWithName:(NSString *)fontName
+{
+	if (!offsetDictionary) 
+	{
+		return 0.f;
+	}
+	
+	return [[offsetDictionary objectForKey:fontName] floatValue];
 }
 
 + (UIFont *) replacement_fontWithName:(NSString *)fontName size:(CGFloat)fontSize
@@ -75,7 +89,7 @@ static void initializeReplacementFonts()
 	UIFont *replacedFont = [UIFont fontWithName:replacedFontName size:self.pointSize];
 	[UIFont setReplacementDictionary:originalReplacementDictionary];
 	
-	return [replacedFont replacement_ascender];
+	return [replacedFont replacement_ascender] + self.pointSize * [UIFont offsetForFontWithName:replacedFontName];
 }
 
 + (NSDictionary *) replacementDictionary
@@ -114,6 +128,36 @@ static void initializeReplacementFonts()
 		if (!font)
 			NSLog(@"WARNING: replacement font '%@' is not available.", fontName);
 	}
+}
+
++ (NSDictionary *) offsetDictionary
+{
+	return offsetDictionary;
+}
+
++ (void) setOffsetDictionary:(NSDictionary *)anOffsetDictionary
+{
+	if (anOffsetDictionary == offsetDictionary)
+		return;
+	
+	for (id key in [anOffsetDictionary allKeys])
+	{
+		if (![key isKindOfClass:[NSString class]])
+		{
+			NSLog(@"ERROR: Offset key must be a string.");
+			return;
+		}
+		
+		id value = [anOffsetDictionary valueForKey:key];
+		if (![value isKindOfClass:[NSNumber class]])
+		{
+			NSLog(@"ERROR: Offsetvalue must be a number.");
+			return;
+		}
+	}
+	
+	[offsetDictionary release];
+	offsetDictionary = [anOffsetDictionary retain];	
 }
 
 @end
