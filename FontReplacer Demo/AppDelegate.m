@@ -14,8 +14,6 @@
 
 @implementation AppDelegate
 
-@synthesize originalReplacementDictionary;
-
 - (BOOL) application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
 	UIWindow *window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
@@ -41,16 +39,12 @@
 {
 	if ([viewController isKindOfClass:[UINavigationController class]]) 
 	{
-		self.originalReplacementDictionary = [UIFont replacementDictionary];
 		[UIFont setReplacementDictionary:nil];	
 	}
 	else 
 	{
-		if (self.originalReplacementDictionary) 
-		{
-			[UIFont setReplacementDictionary:self.originalReplacementDictionary];
-			self.originalReplacementDictionary = nil;
-		}
+		NSDictionary *plistDictionary = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"ReplacementFonts"];
+		[UIFont setReplacementDictionary:plistDictionary];
 	}
 	
 	return YES;
