@@ -14,23 +14,28 @@
 
 - (void) releaseViews;
 
-- (void) reloadData;
+- (void) reloadReplacedFontLabels;
+- (void) reloadReplacementFontLabels;
+
+@property (nonatomic, retain) NSDictionary *originalReplacementDictionary;
 
 @end
 
 @implementation AdjustmentViewController
 
-@synthesize font1NormalLabel = m_font1NormalLabel;
-@synthesize font2NormalLabel = m_font2NormalLabel;
-@synthesize font1ItalicLabel = m_font1ItalicLabel;
-@synthesize font2ItalicLabel = m_font2ItalicLabel;
-@synthesize font1BoldLabel = m_font1BoldLabel;
-@synthesize font2BoldLabel = m_font2BoldLabel;
-@synthesize font1BoldItalicLabel = m_font1BoldItalicLabel;
-@synthesize font2BoldItalicLabel = m_font2BoldItalicLabel;
+@synthesize font1NormalLabel = _font1NormalLabel;
+@synthesize font2NormalLabel = _font2NormalLabel;
+@synthesize font1ItalicLabel = _font1ItalicLabel;
+@synthesize font2ItalicLabel = _font2ItalicLabel;
+@synthesize font1BoldLabel = _font1BoldLabel;
+@synthesize font2BoldLabel = _font2BoldLabel;
+@synthesize font1BoldItalicLabel = _font1BoldItalicLabel;
+@synthesize font2BoldItalicLabel = _font2BoldItalicLabel;
 
-@synthesize offsetSlider = m_factorSlider;
-@synthesize pointSizeSlider = m_pointSizeSlider;
+@synthesize offsetSlider = _factorSlider;
+@synthesize pointSizeSlider = _pointSizeSlider;
+
+@synthesize originalReplacementDictionary = _originalReplacementDictionary;
 
 // MARK: - Object creation and destruction
 
@@ -45,6 +50,7 @@
 - (void) dealloc
 {
 	[self releaseViews];
+	self.originalReplacementDictionary = nil;
 	[super dealloc];
 }
 
@@ -59,7 +65,7 @@
 	self.font1BoldItalicLabel = nil;
 	self.font2BoldItalicLabel = nil;
 	self.offsetSlider = nil;
-	self.pointSizeSlider = nil;	
+	self.pointSizeSlider = nil;
 }
 
 // MARK: - View lifecycle
@@ -67,10 +73,11 @@
 - (void) viewDidLoad
 {
 	[super viewDidLoad];
-	
+
+	self.originalReplacementDictionary = [UIFont replacementDictionary];
 	self.pointSizeSlider.value = self.font1NormalLabel.font.pointSize;
 	
-	[self reloadData];
+	[self reloadReplacedFontLabels];
 }
 
 - (void) viewDidUnload
@@ -81,22 +88,26 @@
 
 // MARK: - Reloading screen
 
-- (void) reloadData
+- (void) reloadReplacedFontLabels
 {	
+	[UIFont setReplacementDictionary:nil];
+			
+	self.font1NormalLabel.font = [UIFont fontWithName:@"ArialMT" size:floorf(self.pointSizeSlider.value)];
+	self.font1ItalicLabel.font = [UIFont fontWithName:@"Arial-ItalicMT" size:floorf(self.pointSizeSlider.value)];
+	self.font1BoldLabel.font = [UIFont fontWithName:@"Arial-BoldMT" size:floorf(self.pointSizeSlider.value)];
+	self.font1BoldItalicLabel.font = [UIFont fontWithName:@"Arial-BoldItalicMT" size:floorf(self.pointSizeSlider.value)];
+}
+
+- (void) reloadReplacementFontLabels
+{
+	[UIFont setReplacementDictionary:self.originalReplacementDictionary];
+	
 	NSMutableDictionary *offsetDictionary = [NSMutableDictionary dictionary];
 	[offsetDictionary setObject:[NSNumber numberWithFloat:self.offsetSlider.value] forKey:@"ArialMT"];
 	[offsetDictionary setObject:[NSNumber numberWithFloat:self.offsetSlider.value] forKey:@"Arial-ItalicMT"];
 	[offsetDictionary setObject:[NSNumber numberWithFloat:self.offsetSlider.value] forKey:@"Arial-BoldMT"];
 	[offsetDictionary setObject:[NSNumber numberWithFloat:self.offsetSlider.value] forKey:@"Arial-BoldItalicMT"];
 	[UIFont setOffsetDictionary:[NSDictionary dictionaryWithDictionary:offsetDictionary]];
-		
-	NSDictionary *originalReplacementDictionary = [UIFont replacementDictionary];
-	[UIFont setReplacementDictionary:nil];
-	self.font1NormalLabel.font = [UIFont fontWithName:@"ArialMT" size:floorf(self.pointSizeSlider.value)];
-	self.font1ItalicLabel.font = [UIFont fontWithName:@"Arial-ItalicMT" size:floorf(self.pointSizeSlider.value)];
-	self.font1BoldLabel.font = [UIFont fontWithName:@"Arial-BoldMT" size:floorf(self.pointSizeSlider.value)];
-	self.font1BoldItalicLabel.font = [UIFont fontWithName:@"Arial-BoldItalicMT" size:floorf(self.pointSizeSlider.value)];
-	[UIFont setReplacementDictionary:originalReplacementDictionary];
 	
 	self.font2NormalLabel.font = [UIFont fontWithName:@"ArialMT" size:floorf(self.pointSizeSlider.value)];
 	self.font2ItalicLabel.font = [UIFont fontWithName:@"Arial-ItalicMT" size:floorf(self.pointSizeSlider.value)];
@@ -114,7 +125,18 @@
 
 - (IBAction) settingsChanged:(id)sender
 {
-	[self reloadData];
+	// Reload the screen. This is made in two steps separated by a run loop. The reason for this trick (only needed
+	// for this special screen where we need both fonts to be displayed) is that drawing of the labels is made:
+	//   - once without replacement dictionary (original replaced font)
+	//   - once with replacement dictionary (replacement font)
+	// If we did all this within the same method (not separated by a run loop), drawing would not be correct since
+	// it doest not occur when we alter the font (it occurs when the display is refreshed afterwards). If both
+	// the following methods were called sequentially within the same run loop, the fonts would be correct but
+	// drawing would occur with the configuration of the last method which has been called (here with the dictionary
+	// installed). This would yield incorrect metrics for drawing the labels using the first font, leading to
+	// incorrect results (truncated labels in my tests)
+	[self reloadReplacedFontLabels];
+	[self performSelector:@selector(reloadReplacementFontLabels) withObject:self afterDelay:0.];
 }
 
 @end

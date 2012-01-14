@@ -276,8 +276,8 @@
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						<int key="IBUIContentHorizontalAlignment">0</int>
 						<int key="IBUIContentVerticalAlignment">0</int>
-						<float key="IBUIValue">33</float>
-						<float key="IBUIMinValue">6</float>
+						<float key="IBUIValue">37</float>
+						<float key="IBUIMinValue">14</float>
 						<float key="IBUIMaxValue">60</float>
 					</object>
 				</array>

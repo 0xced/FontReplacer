@@ -13,16 +13,17 @@
 @interface AdjustmentViewController : UIViewController
 {
 @private
-	UILabel *m_font1NormalLabel;
-	UILabel *m_font2NormalLabel;
-	UILabel *m_font1ItalicLabel;
-	UILabel *m_font2ItalicLabel;
-	UILabel *m_font1BoldLabel;
-	UILabel *m_font2BoldLabel;
-	UILabel *m_font1BoldItalicLabel;
-	UILabel *m_font2BoldItalicLabel;
-	OBSlider *m_factorSlider;
-	UISlider *m_pointSizeSlider;
+	UILabel *_font1NormalLabel;
+	UILabel *_font2NormalLabel;
+	UILabel *_font1ItalicLabel;
+	UILabel *_font2ItalicLabel;
+	UILabel *_font1BoldLabel;
+	UILabel *_font2BoldLabel;
+	UILabel *_font1BoldItalicLabel;
+	UILabel *_font2BoldItalicLabel;
+	OBSlider *_factorSlider;
+	UISlider *_pointSizeSlider;
+	NSDictionary *_originalReplacementDictionary;
 }
 
 @property (nonatomic, retain) IBOutlet UILabel *font1NormalLabel;
