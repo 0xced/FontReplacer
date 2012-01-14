@@ -29,13 +29,27 @@
 	<key>ReplacementFonts</key>
 	<dict>
 		<key>ArialMT</key>
-		<string>CaviarDreams</string>
+		<dict>
+			<key>Name</key>
+			<string>CaviarDreams</string>
+		</dict>
 		<key>Arial-ItalicMT</key>
-		<string>CaviarDreams-Italic</string>
+		<dict>
+			<key>Name</key>
+			<string>CaviarDreams-Italic</string>
+			<key>Offset</key>
+			<real>0.3</real>
+		</dict>
 		<key>Arial-BoldMT</key>
-		<string>CaviarDreams-Bold</string>
+		<dict>
+			<key>Name</key>
+			<string>CaviarDreams-Bold</string>
+		</dict>
 		<key>Arial-BoldItalicMT</key>
-		<string>CaviarDreams-BoldItalic</string>
+		<dict>
+			<key>Name</key>
+			<string>CaviarDreams-BoldItalic</string>
+		</dict>
 	</dict>
 	<key>UIAppFonts</key>
 	<array>

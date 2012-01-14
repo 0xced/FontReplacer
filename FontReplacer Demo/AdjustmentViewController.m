@@ -17,8 +17,6 @@
 - (void) reloadReplacedFontLabels;
 - (void) reloadReplacementFontLabels;
 
-@property (nonatomic, retain) NSDictionary *originalReplacementDictionary;
-
 @end
 
 @implementation AdjustmentViewController
@@ -35,8 +33,6 @@
 @synthesize offsetSlider = _factorSlider;
 @synthesize pointSizeSlider = _pointSizeSlider;
 
-@synthesize originalReplacementDictionary = _originalReplacementDictionary;
-
 // MARK: - Object creation and destruction
 
 - (id) init
@@ -50,7 +46,6 @@
 - (void) dealloc
 {
 	[self releaseViews];
-	self.originalReplacementDictionary = nil;
 	[super dealloc];
 }
 
@@ -74,7 +69,6 @@
 {
 	[super viewDidLoad];
 
-	self.originalReplacementDictionary = [UIFont replacementDictionary];
 	self.pointSizeSlider.value = self.font1NormalLabel.font.pointSize;
 	
 	[self reloadReplacedFontLabels];
@@ -100,14 +94,20 @@
 
 - (void) reloadReplacementFontLabels
 {
-	[UIFont setReplacementDictionary:self.originalReplacementDictionary];
-	
-	NSMutableDictionary *offsetDictionary = [NSMutableDictionary dictionary];
-	[offsetDictionary setObject:[NSNumber numberWithFloat:self.offsetSlider.value] forKey:@"ArialMT"];
-	[offsetDictionary setObject:[NSNumber numberWithFloat:self.offsetSlider.value] forKey:@"Arial-ItalicMT"];
-	[offsetDictionary setObject:[NSNumber numberWithFloat:self.offsetSlider.value] forKey:@"Arial-BoldMT"];
-	[offsetDictionary setObject:[NSNumber numberWithFloat:self.offsetSlider.value] forKey:@"Arial-BoldItalicMT"];
-	[UIFont setOffsetDictionary:[NSDictionary dictionaryWithDictionary:offsetDictionary]];
+	NSMutableDictionary *replacementDictionary = [NSMutableDictionary dictionary];
+	[replacementDictionary setObject:[NSDictionary dictionaryWithObjectsAndKeys:@"CaviarDreams", @"Name", 
+									  [NSNumber numberWithFloat:self.offsetSlider.value], @"Offset", nil] 
+							  forKey:@"ArialMT"];
+	[replacementDictionary setObject:[NSDictionary dictionaryWithObjectsAndKeys:@"CaviarDreams-Italic", @"Name", 
+									  [NSNumber numberWithFloat:self.offsetSlider.value], @"Offset", nil] 
+							  forKey:@"Arial-ItalicMT"];
+	[replacementDictionary setObject:[NSDictionary dictionaryWithObjectsAndKeys:@"CaviarDreams-Bold", @"Name", 
+									  [NSNumber numberWithFloat:self.offsetSlider.value], @"Offset", nil] 
+							  forKey:@"Arial-BoldMT"];
+	[replacementDictionary setObject:[NSDictionary dictionaryWithObjectsAndKeys:@"CaviarDreams-BoldItalic", @"Name", 
+									  [NSNumber numberWithFloat:self.offsetSlider.value], @"Offset", nil] 
+							  forKey:@"Arial-BoldItalicMT"];
+	[UIFont setReplacementDictionary:replacementDictionary];
 	
 	self.font2NormalLabel.font = [UIFont fontWithName:@"ArialMT" size:floorf(self.pointSizeSlider.value)];
 	self.font2ItalicLabel.font = [UIFont fontWithName:@"Arial-ItalicMT" size:floorf(self.pointSizeSlider.value)];

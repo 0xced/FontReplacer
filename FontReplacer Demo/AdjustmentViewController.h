@@ -23,7 +23,6 @@
 	UILabel *_font2BoldItalicLabel;
 	OBSlider *_factorSlider;
 	UISlider *_pointSizeSlider;
-	NSDictionary *_originalReplacementDictionary;
 }
 
 @property (nonatomic, retain) IBOutlet UILabel *font1NormalLabel;

@@ -39,7 +39,7 @@
 
 - (BOOL) tabBarController:(UITabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController
 {
-	if ([viewController isKindOfClass:[FontsViewController class]]) 
+	if ([viewController isKindOfClass:[UINavigationController class]]) 
 	{
 		self.originalReplacementDictionary = [UIFont replacementDictionary];
 		[UIFont setReplacementDictionary:nil];	

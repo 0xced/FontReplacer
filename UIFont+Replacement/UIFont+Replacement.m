@@ -12,7 +12,7 @@
 @implementation UIFont (Replacement)
 
 static NSDictionary *replacementDictionary = nil;
-static NSDictionary *offsetDictionary = nil;
+static NSDictionary *inverseReplacementDictionary = nil;
 
 static void initializeReplacementFonts()
 {
@@ -23,9 +23,6 @@ static void initializeReplacementFonts()
 	
 	NSDictionary *replacementDictionary = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"ReplacementFonts"];
 	[UIFont setReplacementDictionary:replacementDictionary];
-	
-	NSDictionary *offsetDictionary = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"ReplacementOffsets"];
-	[UIFont setOffsetDictionary:offsetDictionary];
 }
 
 + (void) load
@@ -46,28 +43,34 @@ static void initializeReplacementFonts()
 		method_exchangeImplementations(ascender_, replacementAscender_);
 }
 
++ (NSDictionary *) replacementInfoForFontWithName:(NSString *)fontName
+{
+	if (!replacementDictionary)
+		return nil;
+	
+	return [replacementDictionary objectForKey:fontName];
+}
+
++ (NSString *) replacementFontNameForFontWithName:(NSString *)fontName
+{
+	return [[self replacementInfoForFontWithName:fontName] objectForKey:@"Name"] ?: fontName;
+}
+
 + (CGFloat) offsetForFontWithName:(NSString *)fontName
 {
-	if (!offsetDictionary) 
-	{
-		return 0.f;
-	}
-	
-	return [[offsetDictionary objectForKey:fontName] floatValue];
+	return [[[self replacementInfoForFontWithName:fontName] objectForKey:@"Offset"] floatValue];
 }
 
 + (UIFont *) replacement_fontWithName:(NSString *)fontName size:(CGFloat)fontSize
 {
 	initializeReplacementFonts();
-	NSString *replacementFontName = [replacementDictionary objectForKey:fontName];
-	return [self replacement_fontWithName:replacementFontName ?: fontName size:fontSize];
+	return [self replacement_fontWithName:[self replacementFontNameForFontWithName:fontName] size:fontSize];
 }
 
 + (UIFont *) replacement_fontWithName:(NSString *)fontName size:(CGFloat)fontSize traits:(int)traits
 {
 	initializeReplacementFonts();
-	NSString *replacementFontName = [replacementDictionary objectForKey:fontName];
-	return [self replacement_fontWithName:replacementFontName ?: fontName size:fontSize traits:traits];
+	return [self replacement_fontWithName:[self replacementFontNameForFontWithName:fontName] size:fontSize traits:traits];
 }
 
 - (CGFloat) replacement_ascender
@@ -75,20 +78,23 @@ static void initializeReplacementFonts()
 	NSString *fontName = [self fontName];
 	CGFloat ascender = [self replacement_ascender];
     
-	NSArray *replacedFontNames = [replacementDictionary allKeysForObject:fontName];
-	if ([replacedFontNames count] == 0) 
+	// The receiver is not replacing any font. Return original ascender value
+	NSString *replacedFontName = [inverseReplacementDictionary objectForKey:fontName];
+	if (!replacedFontName) 
 	{
 		return ascender;
 	}
-    
-	NSString *replacedFontName = [replacedFontNames objectAtIndex:0];
 	
-	// Trick: To get to the original font, remove the replacement dictionary temporarily
-	NSDictionary *originalReplacementDictionary = [UIFont replacementDictionary];
+	// The receiver is replacing another font: To access the replaced font, we have to remove the replacement dictionary 
+	// temporarily
+	NSDictionary *originalReplacementDictionary = [[[UIFont replacementDictionary] retain] autorelease];
 	[UIFont setReplacementDictionary:nil];
 	UIFont *replacedFont = [UIFont fontWithName:replacedFontName size:self.pointSize];
 	[UIFont setReplacementDictionary:originalReplacementDictionary];
 	
+	// Adjust the receiver ascender value. A good default behavior is to match the ascender value of the replacing
+	// font to match the one of the replaced font. If this default behavior is not convincing enough, an offset
+	// can be provided
 	return [replacedFont replacement_ascender] + self.pointSize * [UIFont offsetForFontWithName:replacedFontName];
 }
 
@@ -102,6 +108,7 @@ static void initializeReplacementFonts()
 	if (aReplacementDictionary == replacementDictionary)
 		return;
 	
+	NSMutableDictionary *anInverseReplacementDictionary = [NSMutableDictionary dictionary];
 	for (id key in [aReplacementDictionary allKeys])
 	{
 		if (![key isKindOfClass:[NSString class]])
@@ -110,54 +117,43 @@ static void initializeReplacementFonts()
 			return;
 		}
 		
-		id value = [aReplacementDictionary valueForKey:key];
-		if (![value isKindOfClass:[NSString class]])
+		NSString *fontName = (NSString *)key;				
+		id value = [aReplacementDictionary valueForKey:fontName];
+		if (![value isKindOfClass:[NSDictionary class]])
 		{
-			NSLog(@"ERROR: Replacement font value must be a string.");
+			NSLog(@"ERROR: Replacement font value must be a dictionary.");
 			return;
 		}
+		
+		NSDictionary *replacementInfo = (NSDictionary *)value;
+		NSString *replacementFontName = [replacementInfo objectForKey:@"Name"];
+		if (!replacementFontName)
+		{
+			NSLog(@"ERROR: Missing replacement font name for font '%@'", fontName);
+			return;
+		}
+		
+		UIFont *font = [UIFont fontWithName:replacementFontName size:10.f];
+		if (!font)
+		{
+			NSLog(@"ERROR: The replacement font '%@' is not available", replacementFontName);
+			return;
+		}
+		
+		if ([anInverseReplacementDictionary objectForKey:replacementFontName])
+		{
+			NSLog(@"ERROR: A font can replace at most one other font. This is not the case for font '%@'", replacementFontName);
+			return;
+		}
+		
+		[anInverseReplacementDictionary setObject:fontName forKey:replacementFontName];
 	}
 	
 	[replacementDictionary release];
 	replacementDictionary = [aReplacementDictionary retain];
 	
-	for (id key in [replacementDictionary allKeys])
-	{
-		NSString *fontName = [replacementDictionary objectForKey:key];
-		UIFont *font = [UIFont fontWithName:fontName size:10];
-		if (!font)
-			NSLog(@"WARNING: replacement font '%@' is not available.", fontName);
-	}
-}
-
-+ (NSDictionary *) offsetDictionary
-{
-	return offsetDictionary;
-}
-
-+ (void) setOffsetDictionary:(NSDictionary *)anOffsetDictionary
-{
-	if (anOffsetDictionary == offsetDictionary)
-		return;
-	
-	for (id key in [anOffsetDictionary allKeys])
-	{
-		if (![key isKindOfClass:[NSString class]])
-		{
-			NSLog(@"ERROR: Offset key must be a string.");
-			return;
-		}
-		
-		id value = [anOffsetDictionary valueForKey:key];
-		if (![value isKindOfClass:[NSNumber class]])
-		{
-			NSLog(@"ERROR: Offsetvalue must be a number.");
-			return;
-		}
-	}
-	
-	[offsetDictionary release];
-	offsetDictionary = [anOffsetDictionary retain];	
+	[inverseReplacementDictionary release];
+	inverseReplacementDictionary = [anInverseReplacementDictionary retain];
 }
 
 @end

@@ -13,7 +13,4 @@
 + (NSDictionary *) replacementDictionary;
 + (void) setReplacementDictionary:(NSDictionary *)aReplacementDictionary;
 
-+ (NSDictionary *) offsetDictionary;
-+ (void) setOffsetDictionary:(NSDictionary *)anOffsetDictionary;
-
 @end
