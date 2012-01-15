@@ -12,6 +12,8 @@
 
 @interface AdjustmentViewController ()
 
+@property (nonatomic, retain) NSString *fontName;
+
 - (void) releaseViews;
 
 - (void) reloadReplacedFontLabels;
@@ -21,44 +23,53 @@
 
 @implementation AdjustmentViewController
 
-@synthesize font1NormalLabel = _font1NormalLabel;
-@synthesize font2NormalLabel = _font2NormalLabel;
-@synthesize font1ItalicLabel = _font1ItalicLabel;
-@synthesize font2ItalicLabel = _font2ItalicLabel;
-@synthesize font1BoldLabel = _font1BoldLabel;
-@synthesize font2BoldLabel = _font2BoldLabel;
-@synthesize font1BoldItalicLabel = _font1BoldItalicLabel;
-@synthesize font2BoldItalicLabel = _font2BoldItalicLabel;
+@synthesize fontName = _fontName;
+
+@synthesize font1FirstLabel = _font1FirstLabel;
+@synthesize font2FirstLabel = _font2FirstLabel;
+@synthesize font1SecondLabel = _font1SecondLabel;
+@synthesize font2SecondLabel = _font2SecondLabel;
+@synthesize font1ThirdLabel = _font1ThirdLabel;
+@synthesize font2ThirdLabel = _font2ThirdLabel;
+@synthesize font1FourthLabel = _font1FourthLabel;
+@synthesize font2FourthLabel = _font2FourthLabel;
 
 @synthesize offsetSlider = _factorSlider;
 @synthesize pointSizeSlider = _pointSizeSlider;
 
 // MARK: - Object creation and destruction
 
-- (id) init
+- (id) initWithFontName:(NSString *)fontName
 {
 	if (!(self = [super initWithNibName:@"AdjustmentViewController" bundle:nil]))
 		return nil;
 	
+	self.fontName = fontName;
 	return self;
+}
+
+- (id) init
+{
+	return [self initWithFontName:[[UIFont systemFontOfSize:10.f] fontName]];
 }
 
 - (void) dealloc
 {
 	[self releaseViews];
+	self.fontName = nil;
 	[super dealloc];
 }
 
 - (void) releaseViews
 {
-	self.font1NormalLabel = nil;
-	self.font2NormalLabel = nil;
-	self.font1ItalicLabel = nil;
-	self.font2ItalicLabel = nil;
-	self.font1BoldLabel = nil;
-	self.font2BoldLabel = nil;
-	self.font1BoldItalicLabel = nil;
-	self.font2BoldItalicLabel = nil;
+	self.font1FirstLabel = nil;
+	self.font2FirstLabel = nil;
+	self.font1SecondLabel = nil;
+	self.font2SecondLabel = nil;
+	self.font1ThirdLabel = nil;
+	self.font2ThirdLabel = nil;
+	self.font1FourthLabel = nil;
+	self.font2FourthLabel = nil;
 	self.offsetSlider = nil;
 	self.pointSizeSlider = nil;
 }
@@ -69,7 +80,7 @@
 {
 	[super viewDidLoad];
 
-	self.pointSizeSlider.value = self.font1NormalLabel.font.pointSize;
+	self.pointSizeSlider.value = self.font1FirstLabel.font.pointSize;
 	
 	[self reloadReplacedFontLabels];
 }
@@ -86,10 +97,10 @@
 {	
 	[UIFont setReplacementDictionary:nil];
 			
-	self.font1NormalLabel.font = [UIFont fontWithName:@"ArialMT" size:floorf(self.pointSizeSlider.value)];
-	self.font1ItalicLabel.font = [UIFont fontWithName:@"Arial-ItalicMT" size:floorf(self.pointSizeSlider.value)];
-	self.font1BoldLabel.font = [UIFont fontWithName:@"Arial-BoldMT" size:floorf(self.pointSizeSlider.value)];
-	self.font1BoldItalicLabel.font = [UIFont fontWithName:@"Arial-BoldItalicMT" size:floorf(self.pointSizeSlider.value)];
+	self.font1FirstLabel.font = [UIFont fontWithName:self.fontName size:floorf(self.pointSizeSlider.value)];
+	self.font1SecondLabel.font = [UIFont fontWithName:self.fontName size:floorf(self.pointSizeSlider.value)];
+	self.font1ThirdLabel.font = [UIFont fontWithName:self.fontName size:floorf(self.pointSizeSlider.value)];
+	self.font1FourthLabel.font = [UIFont fontWithName:self.fontName size:floorf(self.pointSizeSlider.value)];
 }
 
 - (void) reloadReplacementFontLabels
@@ -109,16 +120,16 @@
 							  forKey:@"Arial-BoldItalicMT"];
 	[UIFont setReplacementDictionary:replacementDictionary];
 	
-	self.font2NormalLabel.font = [UIFont fontWithName:@"ArialMT" size:floorf(self.pointSizeSlider.value)];
-	self.font2ItalicLabel.font = [UIFont fontWithName:@"Arial-ItalicMT" size:floorf(self.pointSizeSlider.value)];
-	self.font2BoldLabel.font = [UIFont fontWithName:@"Arial-BoldMT" size:floorf(self.pointSizeSlider.value)];
-	self.font2BoldItalicLabel.font = [UIFont fontWithName:@"Arial-BoldItalicMT" size:floorf(self.pointSizeSlider.value)];
+	self.font2FirstLabel.font = [UIFont fontWithName:@"ArialMT" size:floorf(self.pointSizeSlider.value)];
+	self.font2SecondLabel.font = [UIFont fontWithName:@"Arial-ItalicMT" size:floorf(self.pointSizeSlider.value)];
+	self.font2ThirdLabel.font = [UIFont fontWithName:@"Arial-BoldMT" size:floorf(self.pointSizeSlider.value)];
+	self.font2FourthLabel.font = [UIFont fontWithName:@"Arial-BoldItalicMT" size:floorf(self.pointSizeSlider.value)];
 	
 	// Force a refresh
-	[self.font2NormalLabel setNeedsDisplay];
-	[self.font2ItalicLabel setNeedsDisplay];
-	[self.font2BoldLabel setNeedsDisplay];
-	[self.font2BoldItalicLabel setNeedsDisplay];
+	[self.font2FirstLabel setNeedsDisplay];
+	[self.font2SecondLabel setNeedsDisplay];
+	[self.font2ThirdLabel setNeedsDisplay];
+	[self.font2FourthLabel setNeedsDisplay];
 }
 
 // MARK: - Event callbacks

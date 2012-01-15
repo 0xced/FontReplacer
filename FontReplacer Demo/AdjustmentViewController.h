@@ -11,28 +11,17 @@
 #import "OBSlider.h"
 
 @interface AdjustmentViewController : UIViewController
-{
-@private
-	UILabel *_font1NormalLabel;
-	UILabel *_font2NormalLabel;
-	UILabel *_font1ItalicLabel;
-	UILabel *_font2ItalicLabel;
-	UILabel *_font1BoldLabel;
-	UILabel *_font2BoldLabel;
-	UILabel *_font1BoldItalicLabel;
-	UILabel *_font2BoldItalicLabel;
-	OBSlider *_factorSlider;
-	UISlider *_pointSizeSlider;
-}
 
-@property (nonatomic, retain) IBOutlet UILabel *font1NormalLabel;
-@property (nonatomic, retain) IBOutlet UILabel *font2NormalLabel;
-@property (nonatomic, retain) IBOutlet UILabel *font1ItalicLabel;
-@property (nonatomic, retain) IBOutlet UILabel *font2ItalicLabel;
-@property (nonatomic, retain) IBOutlet UILabel *font1BoldLabel;
-@property (nonatomic, retain) IBOutlet UILabel *font2BoldLabel;
-@property (nonatomic, retain) IBOutlet UILabel *font1BoldItalicLabel;
-@property (nonatomic, retain) IBOutlet UILabel *font2BoldItalicLabel;
+- (id) initWithFontName:(NSString *)fontName;
+
+@property (nonatomic, retain) IBOutlet UILabel *font1FirstLabel;
+@property (nonatomic, retain) IBOutlet UILabel *font2FirstLabel;
+@property (nonatomic, retain) IBOutlet UILabel *font1SecondLabel;
+@property (nonatomic, retain) IBOutlet UILabel *font2SecondLabel;
+@property (nonatomic, retain) IBOutlet UILabel *font1ThirdLabel;
+@property (nonatomic, retain) IBOutlet UILabel *font2ThirdLabel;
+@property (nonatomic, retain) IBOutlet UILabel *font1FourthLabel;
+@property (nonatomic, retain) IBOutlet UILabel *font2FourthLabel;
 
 @property (nonatomic, retain) IBOutlet OBSlider *offsetSlider;
 @property (nonatomic, retain) IBOutlet UISlider *pointSizeSlider;
