@@ -7,7 +7,14 @@
 //
 
 #import "FontsViewController.h"
-#import "ComparatorViewController.h"
+
+#import "AdjustmentViewController.h"
+
+@interface FontsViewController ()
+
+- (void) reloadData;
+
+@end
 
 @implementation FontsViewController
 
@@ -17,6 +24,7 @@
 		return nil;
 	
 	familyNames = [[[UIFont familyNames] sortedArrayUsingSelector:@selector(localizedCompare:)] retain];
+	self.title = @"Replacement font";
 	
 	return self;
 }
@@ -25,6 +33,36 @@
 {
 	[familyNames release];
 	[super dealloc];
+}
+
+// MARK: - Accessors and mutators
+
+@synthesize replacementFontName = _replacementFontName;
+
+- (void) setReplacementFontName:(NSString *)replacementFontName
+{
+	if (_replacementFontName == replacementFontName) 
+		return;
+	
+	[_replacementFontName release];
+	_replacementFontName = [replacementFontName retain];
+	
+	[self reloadData];
+}
+
+// MARK: - View lifecycle
+
+- (void) viewDidLoad
+{
+	[super viewDidLoad];
+	[self reloadData];
+}
+
+// MARK: - Reloading the screen
+
+- (void) reloadData
+{
+	self.title = self.replacementFontName ? @"Replaced font" : @"Replacement font";
 }
 
 // MARK: - Table View
@@ -88,8 +126,18 @@
 {
 	NSString *fontName = [self fontNameAtIndexPath:indexPath];
 	
-	ComparatorViewController *comparatorViewController = [[ComparatorViewController alloc] initWithFontName:fontName];
-	[self.navigationController pushViewController:comparatorViewController animated:YES];
+	if (self.replacementFontName) 
+	{
+		AdjustmentViewController *adjustmentViewController = [[[AdjustmentViewController alloc] initWithReplacedFontName:fontName
+																									 replacementFontName:self.replacementFontName] autorelease];
+		[self.navigationController pushViewController:adjustmentViewController animated:YES];
+	}
+	else
+	{
+		FontsViewController *fontsViewController = [[[FontsViewController alloc] init] autorelease];
+		fontsViewController.replacementFontName = fontName;
+		[self.navigationController pushViewController:fontsViewController animated:YES];
+	}
 }
 
 @end

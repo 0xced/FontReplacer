@@ -12,7 +12,7 @@
 
 @interface AdjustmentViewController : UIViewController
 
-- (id) initWithFontName:(NSString *)fontName;
+- (id) initWithReplacedFontName:(NSString *)replacedFontName replacementFontName:(NSString *)replacementFontName;
 
 @property (nonatomic, retain) IBOutlet UILabel *font1FirstLabel;
 @property (nonatomic, retain) IBOutlet UILabel *font2FirstLabel;
@@ -24,7 +24,10 @@
 @property (nonatomic, retain) IBOutlet UILabel *font2FourthLabel;
 
 @property (nonatomic, retain) IBOutlet OBSlider *offsetSlider;
+@property (nonatomic, retain) IBOutlet UILabel *offsetLabel;
+
 @property (nonatomic, retain) IBOutlet UISlider *pointSizeSlider;
+@property (nonatomic, retain) IBOutlet UILabel *pointSizeLabel;
 
 - (IBAction) settingsChanged:(id)sender;
 

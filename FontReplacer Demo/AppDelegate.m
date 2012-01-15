@@ -8,7 +8,6 @@
 
 #import "AppDelegate.h"
 
-#import "AdjustmentViewController.h"
 #import "FontsViewController.h"
 #import "UIFont+Replacement.h"
 
@@ -19,14 +18,11 @@
 	UIWindow *window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 	UIViewController *demoViewController = [[UIViewController alloc] initWithNibName:@"DemoViewController" bundle:nil];
 	UIViewController *fontsViewController = [[[FontsViewController alloc] init] autorelease];
-	UIViewController *adjustmentViewController = [[[AdjustmentViewController alloc] init] autorelease];
 	UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:fontsViewController];
 	UITabBarController *tabBarController = [[UITabBarController alloc] init];
 	tabBarController.delegate = self;
-	tabBarController.viewControllers = [NSArray arrayWithObjects:demoViewController, adjustmentViewController, navigationController, nil];
+	tabBarController.viewControllers = [NSArray arrayWithObjects:demoViewController, navigationController, nil];
 	demoViewController.title = @"Demo";
-	adjustmentViewController.title = @"Adjust";
-	fontsViewController.title = @"Fonts";
 	if ([window respondsToSelector:@selector(setRootViewController:)])
 		window.rootViewController = tabBarController;
 	else

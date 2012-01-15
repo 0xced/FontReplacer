@@ -12,10 +12,12 @@
 
 @interface AdjustmentViewController ()
 
-@property (nonatomic, retain) NSString *fontName;
+@property (nonatomic, retain) NSString *replacedFontName;
+@property (nonatomic, retain) NSString *replacementFontName;
 
 - (void) releaseViews;
 
+- (void) reloadData;
 - (void) reloadReplacedFontLabels;
 - (void) reloadReplacementFontLabels;
 
@@ -23,7 +25,8 @@
 
 @implementation AdjustmentViewController
 
-@synthesize fontName = _fontName;
+@synthesize replacedFontName = _replacedFontName;
+@synthesize replacementFontName = _replacementFontName;
 
 @synthesize font1FirstLabel = _font1FirstLabel;
 @synthesize font2FirstLabel = _font2FirstLabel;
@@ -35,28 +38,29 @@
 @synthesize font2FourthLabel = _font2FourthLabel;
 
 @synthesize offsetSlider = _factorSlider;
+@synthesize offsetLabel = _offsetLabel;
+
 @synthesize pointSizeSlider = _pointSizeSlider;
+@synthesize pointSizeLabel = _pointSizeLabel;
 
 // MARK: - Object creation and destruction
 
-- (id) initWithFontName:(NSString *)fontName
+- (id) initWithReplacedFontName:(NSString *)replacedFontName replacementFontName:(NSString *)replacementFontName
 {
 	if (!(self = [super initWithNibName:@"AdjustmentViewController" bundle:nil]))
 		return nil;
 	
-	self.fontName = fontName;
+	self.replacedFontName = replacedFontName;
+	self.replacementFontName = replacementFontName;
+	self.title = @"Offset adjustment";
 	return self;
-}
-
-- (id) init
-{
-	return [self initWithFontName:[[UIFont systemFontOfSize:10.f] fontName]];
 }
 
 - (void) dealloc
 {
 	[self releaseViews];
-	self.fontName = nil;
+	self.replacedFontName = nil;
+	self.replacementFontName = nil;
 	[super dealloc];
 }
 
@@ -71,7 +75,9 @@
 	self.font1FourthLabel = nil;
 	self.font2FourthLabel = nil;
 	self.offsetSlider = nil;
+	self.offsetLabel = nil;
 	self.pointSizeSlider = nil;
+	self.pointSizeLabel = nil;
 }
 
 // MARK: - View lifecycle
@@ -82,7 +88,7 @@
 
 	self.pointSizeSlider.value = self.font1FirstLabel.font.pointSize;
 	
-	[self reloadReplacedFontLabels];
+	[self reloadData];
 }
 
 - (void) viewDidUnload
@@ -93,49 +99,11 @@
 
 // MARK: - Reloading screen
 
-- (void) reloadReplacedFontLabels
-{	
-	[UIFont setReplacementDictionary:nil];
-			
-	self.font1FirstLabel.font = [UIFont fontWithName:self.fontName size:floorf(self.pointSizeSlider.value)];
-	self.font1SecondLabel.font = [UIFont fontWithName:self.fontName size:floorf(self.pointSizeSlider.value)];
-	self.font1ThirdLabel.font = [UIFont fontWithName:self.fontName size:floorf(self.pointSizeSlider.value)];
-	self.font1FourthLabel.font = [UIFont fontWithName:self.fontName size:floorf(self.pointSizeSlider.value)];
-}
-
-- (void) reloadReplacementFontLabels
+- (void) reloadData
 {
-	NSMutableDictionary *replacementDictionary = [NSMutableDictionary dictionary];
-	[replacementDictionary setObject:[NSDictionary dictionaryWithObjectsAndKeys:@"CaviarDreams", @"Name", 
-									  [NSNumber numberWithFloat:self.offsetSlider.value], @"Offset", nil] 
-							  forKey:@"ArialMT"];
-	[replacementDictionary setObject:[NSDictionary dictionaryWithObjectsAndKeys:@"CaviarDreams-Italic", @"Name", 
-									  [NSNumber numberWithFloat:self.offsetSlider.value], @"Offset", nil] 
-							  forKey:@"Arial-ItalicMT"];
-	[replacementDictionary setObject:[NSDictionary dictionaryWithObjectsAndKeys:@"CaviarDreams-Bold", @"Name", 
-									  [NSNumber numberWithFloat:self.offsetSlider.value], @"Offset", nil] 
-							  forKey:@"Arial-BoldMT"];
-	[replacementDictionary setObject:[NSDictionary dictionaryWithObjectsAndKeys:@"CaviarDreams-BoldItalic", @"Name", 
-									  [NSNumber numberWithFloat:self.offsetSlider.value], @"Offset", nil] 
-							  forKey:@"Arial-BoldItalicMT"];
-	[UIFont setReplacementDictionary:replacementDictionary];
+	self.offsetLabel.text = [NSString stringWithFormat:@"%.3f", self.offsetSlider.value];
+	self.pointSizeLabel.text = [NSString stringWithFormat:@"%d", (NSUInteger)self.pointSizeSlider.value];
 	
-	self.font2FirstLabel.font = [UIFont fontWithName:@"ArialMT" size:floorf(self.pointSizeSlider.value)];
-	self.font2SecondLabel.font = [UIFont fontWithName:@"Arial-ItalicMT" size:floorf(self.pointSizeSlider.value)];
-	self.font2ThirdLabel.font = [UIFont fontWithName:@"Arial-BoldMT" size:floorf(self.pointSizeSlider.value)];
-	self.font2FourthLabel.font = [UIFont fontWithName:@"Arial-BoldItalicMT" size:floorf(self.pointSizeSlider.value)];
-	
-	// Force a refresh
-	[self.font2FirstLabel setNeedsDisplay];
-	[self.font2SecondLabel setNeedsDisplay];
-	[self.font2ThirdLabel setNeedsDisplay];
-	[self.font2FourthLabel setNeedsDisplay];
-}
-
-// MARK: - Event callbacks
-
-- (IBAction) settingsChanged:(id)sender
-{
 	// Reload the screen. This is made in two steps separated by a run loop. The reason for this trick (only needed
 	// for this special screen where we need both fonts to be displayed) is that drawing of the labels is made:
 	//   - once without replacement dictionary (original replaced font)
@@ -148,6 +116,43 @@
 	// incorrect results (truncated labels in my tests)
 	[self reloadReplacedFontLabels];
 	[self performSelector:@selector(reloadReplacementFontLabels) withObject:self afterDelay:0.];
+}
+
+- (void) reloadReplacedFontLabels
+{	
+	[UIFont setReplacementDictionary:nil];
+			
+	self.font1FirstLabel.font = [UIFont fontWithName:self.replacedFontName size:floorf(self.pointSizeSlider.value)];
+	self.font1SecondLabel.font = [UIFont fontWithName:self.replacedFontName size:floorf(self.pointSizeSlider.value)];
+	self.font1ThirdLabel.font = [UIFont fontWithName:self.replacedFontName size:floorf(self.pointSizeSlider.value)];
+	self.font1FourthLabel.font = [UIFont fontWithName:self.replacedFontName size:floorf(self.pointSizeSlider.value)];
+}
+
+- (void) reloadReplacementFontLabels
+{
+	NSMutableDictionary *replacementDictionary = [NSMutableDictionary dictionary];
+	[replacementDictionary setObject:[NSDictionary dictionaryWithObjectsAndKeys:self.replacementFontName, @"Name", 
+									  [NSNumber numberWithFloat:self.offsetSlider.value], @"Offset", nil] 
+							  forKey:self.replacedFontName];
+	[UIFont setReplacementDictionary:replacementDictionary];
+	
+	self.font2FirstLabel.font = [UIFont fontWithName:self.replacedFontName size:floorf(self.pointSizeSlider.value)];
+	self.font2SecondLabel.font = [UIFont fontWithName:self.replacedFontName size:floorf(self.pointSizeSlider.value)];
+	self.font2ThirdLabel.font = [UIFont fontWithName:self.replacedFontName size:floorf(self.pointSizeSlider.value)];
+	self.font2FourthLabel.font = [UIFont fontWithName:self.replacedFontName size:floorf(self.pointSizeSlider.value)];
+	
+	// Force a refresh
+	[self.font2FirstLabel setNeedsDisplay];
+	[self.font2SecondLabel setNeedsDisplay];
+	[self.font2ThirdLabel setNeedsDisplay];
+	[self.font2FourthLabel setNeedsDisplay];
+}
+
+// MARK: - Event callbacks
+
+- (IBAction) settingsChanged:(id)sender
+{
+	[self reloadData];
 }
 
 @end

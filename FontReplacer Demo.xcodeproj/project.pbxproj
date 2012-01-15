@@ -12,7 +12,6 @@
 		6FB0366414C0030200626500 /* OBSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FB0366314C0030200626500 /* OBSlider.m */; };
 		DA336B6B13F01F5D00A60EA6 /* DemoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DA336B6A13F01F5D00A60EA6 /* DemoViewController.xib */; };
 		DA4C182113F446120015A600 /* FontsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DA4C181F13F446110015A600 /* FontsViewController.m */; };
-		DA4C182813F4506A0015A600 /* ComparatorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DA4C182613F450680015A600 /* ComparatorViewController.m */; };
 		DA6C855713F02703007060AF /* CaviarDreams.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DA6C855213F02703007060AF /* CaviarDreams.ttf */; };
 		DA6C855813F02703007060AF /* CaviarDreams_Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DA6C855313F02703007060AF /* CaviarDreams_Bold.ttf */; };
 		DA6C855913F02703007060AF /* CaviarDreams_BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DA6C855413F02703007060AF /* CaviarDreams_BoldItalic.ttf */; };
@@ -23,7 +22,6 @@
 		DA98620913F01BCE006DEC9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = DA98620813F01BCE006DEC9A /* main.m */; };
 		DA98620D13F01BCE006DEC9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = DA98620C13F01BCE006DEC9A /* AppDelegate.m */; };
 		DA98621C13F01E63006DEC9A /* UIFont+Replacement.m in Sources */ = {isa = PBXBuildFile; fileRef = DA98621B13F01E63006DEC9A /* UIFont+Replacement.m */; };
-		DADAB65A13F5DDB0000301E6 /* ComparisonResult.m in Sources */ = {isa = PBXBuildFile; fileRef = DADAB65913F5DDB0000301E6 /* ComparisonResult.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,8 +33,6 @@
 		DA336B6A13F01F5D00A60EA6 /* DemoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DemoViewController.xib; sourceTree = "<group>"; };
 		DA4C181E13F446110015A600 /* FontsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FontsViewController.h; sourceTree = "<group>"; };
 		DA4C181F13F446110015A600 /* FontsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FontsViewController.m; sourceTree = "<group>"; };
-		DA4C182513F450680015A600 /* ComparatorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ComparatorViewController.h; sourceTree = "<group>"; };
-		DA4C182613F450680015A600 /* ComparatorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ComparatorViewController.m; sourceTree = "<group>"; };
 		DA6C855213F02703007060AF /* CaviarDreams.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = CaviarDreams.ttf; sourceTree = "<group>"; };
 		DA6C855313F02703007060AF /* CaviarDreams_Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = CaviarDreams_Bold.ttf; sourceTree = "<group>"; };
 		DA6C855413F02703007060AF /* CaviarDreams_BoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = CaviarDreams_BoldItalic.ttf; sourceTree = "<group>"; };
@@ -52,8 +48,6 @@
 		DA98620C13F01BCE006DEC9A /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		DA98621A13F01E63006DEC9A /* UIFont+Replacement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIFont+Replacement.h"; sourceTree = "<group>"; };
 		DA98621B13F01E63006DEC9A /* UIFont+Replacement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIFont+Replacement.m"; sourceTree = "<group>"; };
-		DADAB65813F5DDAF000301E6 /* ComparisonResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ComparisonResult.h; sourceTree = "<group>"; };
-		DADAB65913F5DDB0000301E6 /* ComparisonResult.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ComparisonResult.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -130,10 +124,6 @@
 				DA336B6A13F01F5D00A60EA6 /* DemoViewController.xib */,
 				DA4C181E13F446110015A600 /* FontsViewController.h */,
 				DA4C181F13F446110015A600 /* FontsViewController.m */,
-				DA4C182513F450680015A600 /* ComparatorViewController.h */,
-				DA4C182613F450680015A600 /* ComparatorViewController.m */,
-				DADAB65813F5DDAF000301E6 /* ComparisonResult.h */,
-				DADAB65913F5DDB0000301E6 /* ComparisonResult.m */,
 				DA6C855113F02703007060AF /* CaviarDreams */,
 				DA98620313F01BCE006DEC9A /* Supporting Files */,
 			);
@@ -232,8 +222,6 @@
 				DA98620D13F01BCE006DEC9A /* AppDelegate.m in Sources */,
 				DA98621C13F01E63006DEC9A /* UIFont+Replacement.m in Sources */,
 				DA4C182113F446120015A600 /* FontsViewController.m in Sources */,
-				DA4C182813F4506A0015A600 /* ComparatorViewController.m in Sources */,
-				DADAB65A13F5DDB0000301E6 /* ComparisonResult.m in Sources */,
 				6FB0365D14BFFEC900626500 /* AdjustmentViewController.m in Sources */,
 				6FB0366414C0030200626500 /* OBSlider.m in Sources */,
 			);
