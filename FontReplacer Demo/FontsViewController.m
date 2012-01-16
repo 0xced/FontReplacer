@@ -9,6 +9,7 @@
 #import "FontsViewController.h"
 
 #import "AdjustmentViewController.h"
+#import "UIFont+Replacement.h"
 
 @interface FontsViewController ()
 
@@ -52,10 +53,18 @@
 
 // MARK: - View lifecycle
 
-- (void) viewDidLoad
+- (void) viewWillAppear:(BOOL)animated
 {
-	[super viewDidLoad];
+	[super viewWillAppear:animated];
+	[UIFont setReplacementDictionary:nil];
 	[self reloadData];
+}
+
+- (void) viewWillDisappear:(BOOL)animated
+{
+	[super viewWillDisappear:animated];
+	NSDictionary *plistDictionary = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"ReplacementFonts"];
+	[UIFont setReplacementDictionary:plistDictionary];
 }
 
 // MARK: - Reloading the screen
@@ -63,6 +72,7 @@
 - (void) reloadData
 {
 	self.title = self.replacementFontName ? @"Replaced font" : @"Replacement font";
+	[self.tableView reloadData];
 }
 
 // MARK: - Table View

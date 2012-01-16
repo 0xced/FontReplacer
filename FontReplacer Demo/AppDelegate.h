@@ -6,6 +6,6 @@
 //  Copyright (c) 2011 Cédric Luthi. All rights reserved.
 //
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate, UITabBarControllerDelegate>
+@interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @end

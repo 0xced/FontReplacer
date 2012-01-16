@@ -95,6 +95,11 @@
 																							target:self
 																							action:@selector(save:)] autorelease];
 	[self loadSettings];
+}
+
+- (void) viewWillAppear:(BOOL)animated
+{
+	[super viewWillAppear:animated];
 	[self reloadData];
 }
 
