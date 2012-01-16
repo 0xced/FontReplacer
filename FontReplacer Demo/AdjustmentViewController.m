@@ -21,6 +21,10 @@
 - (void) reloadReplacedFontLabels;
 - (void) reloadReplacementFontLabels;
 
+- (void) loadSettings;
+- (void) saveSettings;
+- (NSString *)settingsFilePath;
+
 @end
 
 @implementation AdjustmentViewController
@@ -87,7 +91,10 @@
 	[super viewDidLoad];
 
 	self.pointSizeSlider.value = self.font1FirstLabel.font.pointSize;
-	
+	self.navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave
+																							target:self
+																							action:@selector(save:)] autorelease];
+	[self loadSettings];
 	[self reloadData];
 }
 
@@ -148,11 +155,76 @@
 	[self.font2FourthLabel setNeedsDisplay];
 }
 
+// MARK: - Loading from and saving to a plist
+
+- (void) loadSettings
+{
+	NSString *settingsFilePath = [self settingsFilePath];
+	NSDictionary *settings = [NSDictionary dictionaryWithContentsOfFile:settingsFilePath];
+	if (! settings) {
+		self.offsetSlider.value = 0.f;
+		return;
+	}
+	
+	NSDictionary *replacementDictionary = [settings objectForKey:@"ReplacementFonts"];
+	if (! replacementDictionary) {
+		self.offsetSlider.value = 0.f;
+		return;
+	}
+	
+	NSDictionary *replacementInfoDictionary = [replacementDictionary objectForKey:self.replacedFontName];
+	if (! replacementInfoDictionary) {
+		self.offsetSlider.value = 0.f;
+		return;
+	}
+	
+	self.offsetSlider.value = [[replacementInfoDictionary objectForKey:@"Offset"] floatValue];
+}
+
+- (void)saveSettings
+{
+	NSString *settingsFilePath = [self settingsFilePath];
+	NSMutableDictionary *settings = [NSMutableDictionary dictionaryWithContentsOfFile:settingsFilePath] ?: [NSMutableDictionary dictionary];
+	
+	// If the replacement font was already used, remove the corresponding entry
+	NSMutableDictionary *replacementDictionary = [NSMutableDictionary dictionaryWithDictionary:[settings objectForKey:@"ReplacementFonts"]];
+	for (NSString *replacedFontName in [replacementDictionary allKeys]) {
+		NSDictionary *replacementInfoDictionary = [replacementDictionary objectForKey:replacedFontName];
+		if ([self.replacementFontName isEqualToString:[replacementInfoDictionary objectForKey:@"Name"]]) {
+			[replacementDictionary removeObjectForKey:replacedFontName];
+		}
+	}
+	
+	NSDictionary *replacementInfoDictionary = nil;
+	if (self.offsetSlider.value != 0) {
+		replacementInfoDictionary = [NSDictionary dictionaryWithObjectsAndKeys:self.replacementFontName, @"Name", 
+									 [NSNumber numberWithFloat:self.offsetSlider.value], @"Offset", nil];
+	}
+	else {
+		replacementInfoDictionary = [NSDictionary dictionaryWithObjectsAndKeys:self.replacementFontName, @"Name", nil];
+	}
+	[replacementDictionary setObject:replacementInfoDictionary forKey:self.replacedFontName];
+	[settings setObject:replacementDictionary forKey:@"ReplacementFonts"];
+	[settings writeToFile:settingsFilePath atomically:NO];
+}
+
+- (NSString *)settingsFilePath
+{
+	NSString *documentPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+	return [documentPath stringByAppendingPathComponent:@"Settings.plist"];
+}
+
 // MARK: - Event callbacks
 
 - (IBAction) settingsChanged:(id)sender
 {
 	[self reloadData];
+}
+
+- (IBAction) save:(id)sender
+{
+	[self saveSettings];
+	[self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 @end

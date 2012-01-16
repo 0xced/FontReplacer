@@ -30,5 +30,6 @@
 @property (nonatomic, retain) IBOutlet UILabel *pointSizeLabel;
 
 - (IBAction) settingsChanged:(id)sender;
+- (IBAction) save:(id)sender;
 
 @end
