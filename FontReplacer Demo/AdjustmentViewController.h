@@ -14,14 +14,14 @@
 
 - (id) initWithReplacedFontName:(NSString *)replacedFontName replacementFontName:(NSString *)replacementFontName;
 
-@property (nonatomic, retain) IBOutlet UILabel *font1FirstLabel;
-@property (nonatomic, retain) IBOutlet UILabel *font2FirstLabel;
-@property (nonatomic, retain) IBOutlet UILabel *font1SecondLabel;
-@property (nonatomic, retain) IBOutlet UILabel *font2SecondLabel;
-@property (nonatomic, retain) IBOutlet UILabel *font1ThirdLabel;
-@property (nonatomic, retain) IBOutlet UILabel *font2ThirdLabel;
-@property (nonatomic, retain) IBOutlet UILabel *font1FourthLabel;
-@property (nonatomic, retain) IBOutlet UILabel *font2FourthLabel;
+@property (nonatomic, retain) IBOutlet UILabel *replacementFontFirstLabel;
+@property (nonatomic, retain) IBOutlet UILabel *replacedFontFirstLabel;
+@property (nonatomic, retain) IBOutlet UILabel *replacementFontSecondLabel;
+@property (nonatomic, retain) IBOutlet UILabel *replacedFontSecondLabel;
+@property (nonatomic, retain) IBOutlet UILabel *replacementFontThirdLabel;
+@property (nonatomic, retain) IBOutlet UILabel *replacedFontThirdLabel;
+@property (nonatomic, retain) IBOutlet UILabel *replacementFontFourthLabel;
+@property (nonatomic, retain) IBOutlet UILabel *replacedFontFourthLabel;
 
 @property (nonatomic, retain) IBOutlet OBSlider *offsetSlider;
 @property (nonatomic, retain) IBOutlet UILabel *offsetLabel;

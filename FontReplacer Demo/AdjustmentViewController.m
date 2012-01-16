@@ -35,14 +35,14 @@
 @synthesize replacedFontName = _replacedFontName;
 @synthesize replacementFontName = _replacementFontName;
 
-@synthesize font1FirstLabel = _font1FirstLabel;
-@synthesize font2FirstLabel = _font2FirstLabel;
-@synthesize font1SecondLabel = _font1SecondLabel;
-@synthesize font2SecondLabel = _font2SecondLabel;
-@synthesize font1ThirdLabel = _font1ThirdLabel;
-@synthesize font2ThirdLabel = _font2ThirdLabel;
-@synthesize font1FourthLabel = _font1FourthLabel;
-@synthesize font2FourthLabel = _font2FourthLabel;
+@synthesize replacementFontFirstLabel = _font1FirstLabel;
+@synthesize replacedFontFirstLabel = _font2FirstLabel;
+@synthesize replacementFontSecondLabel = _font1SecondLabel;
+@synthesize replacedFontSecondLabel = _font2SecondLabel;
+@synthesize replacementFontThirdLabel = _font1ThirdLabel;
+@synthesize replacedFontThirdLabel = _font2ThirdLabel;
+@synthesize replacementFontFourthLabel = _font1FourthLabel;
+@synthesize replacedFontFourthLabel = _font2FourthLabel;
 
 @synthesize offsetSlider = _factorSlider;
 @synthesize offsetLabel = _offsetLabel;
@@ -73,14 +73,14 @@
 
 - (void) releaseViews
 {
-	self.font1FirstLabel = nil;
-	self.font2FirstLabel = nil;
-	self.font1SecondLabel = nil;
-	self.font2SecondLabel = nil;
-	self.font1ThirdLabel = nil;
-	self.font2ThirdLabel = nil;
-	self.font1FourthLabel = nil;
-	self.font2FourthLabel = nil;
+	self.replacementFontFirstLabel = nil;
+	self.replacedFontFirstLabel = nil;
+	self.replacementFontSecondLabel = nil;
+	self.replacedFontSecondLabel = nil;
+	self.replacementFontThirdLabel = nil;
+	self.replacedFontThirdLabel = nil;
+	self.replacementFontFourthLabel = nil;
+	self.replacedFontFourthLabel = nil;
 	self.offsetSlider = nil;
 	self.offsetLabel = nil;
 	self.pointSizeSlider = nil;
@@ -93,7 +93,7 @@
 {
 	[super viewDidLoad];
 
-	self.pointSizeSlider.value = self.font1FirstLabel.font.pointSize;
+	self.pointSizeSlider.value = self.replacementFontFirstLabel.font.pointSize;
 	self.navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave
 																							target:self
 																							action:@selector(save:)] autorelease];
@@ -137,10 +137,10 @@
 {	
 	[UIFont setReplacementDictionary:nil];
 			
-	self.font1FirstLabel.font = [UIFont fontWithName:self.replacedFontName size:floorf(self.pointSizeSlider.value)];
-	self.font1SecondLabel.font = [UIFont fontWithName:self.replacedFontName size:floorf(self.pointSizeSlider.value)];
-	self.font1ThirdLabel.font = [UIFont fontWithName:self.replacedFontName size:floorf(self.pointSizeSlider.value)];
-	self.font1FourthLabel.font = [UIFont fontWithName:self.replacedFontName size:floorf(self.pointSizeSlider.value)];
+	self.replacedFontFirstLabel.font = [UIFont fontWithName:self.replacedFontName size:floorf(self.pointSizeSlider.value)];
+	self.replacedFontSecondLabel.font = [UIFont fontWithName:self.replacedFontName size:floorf(self.pointSizeSlider.value)];
+	self.replacedFontThirdLabel.font = [UIFont fontWithName:self.replacedFontName size:floorf(self.pointSizeSlider.value)];
+	self.replacedFontFourthLabel.font = [UIFont fontWithName:self.replacedFontName size:floorf(self.pointSizeSlider.value)];
 }
 
 - (void) reloadReplacementFontLabels
@@ -151,16 +151,16 @@
 							  forKey:self.replacedFontName];
 	[UIFont setReplacementDictionary:replacementDictionary];
 	
-	self.font2FirstLabel.font = [UIFont fontWithName:self.replacedFontName size:floorf(self.pointSizeSlider.value)];
-	self.font2SecondLabel.font = [UIFont fontWithName:self.replacedFontName size:floorf(self.pointSizeSlider.value)];
-	self.font2ThirdLabel.font = [UIFont fontWithName:self.replacedFontName size:floorf(self.pointSizeSlider.value)];
-	self.font2FourthLabel.font = [UIFont fontWithName:self.replacedFontName size:floorf(self.pointSizeSlider.value)];
+	self.replacementFontFirstLabel.font = [UIFont fontWithName:self.replacedFontName size:floorf(self.pointSizeSlider.value)];
+	self.replacementFontSecondLabel.font = [UIFont fontWithName:self.replacedFontName size:floorf(self.pointSizeSlider.value)];
+	self.replacementFontThirdLabel.font = [UIFont fontWithName:self.replacedFontName size:floorf(self.pointSizeSlider.value)];
+	self.replacementFontFourthLabel.font = [UIFont fontWithName:self.replacedFontName size:floorf(self.pointSizeSlider.value)];
 	
 	// Force a refresh
-	[self.font2FirstLabel setNeedsDisplay];
-	[self.font2SecondLabel setNeedsDisplay];
-	[self.font2ThirdLabel setNeedsDisplay];
-	[self.font2FourthLabel setNeedsDisplay];
+	[self.replacementFontFirstLabel setNeedsDisplay];
+	[self.replacementFontSecondLabel setNeedsDisplay];
+	[self.replacementFontThirdLabel setNeedsDisplay];
+	[self.replacementFontFourthLabel setNeedsDisplay];
 }
 
 // MARK: - Loading from and saving to a plist
@@ -169,19 +169,22 @@
 {
 	NSString *settingsFilePath = [self settingsFilePath];
 	NSDictionary *settings = [NSDictionary dictionaryWithContentsOfFile:settingsFilePath];
-	if (! settings) {
+	if (!settings) 
+	{
 		self.offsetSlider.value = 0.f;
 		return;
 	}
 	
 	NSDictionary *replacementDictionary = [settings objectForKey:@"ReplacementFonts"];
-	if (! replacementDictionary) {
+	if (!replacementDictionary)
+	{
 		self.offsetSlider.value = 0.f;
 		return;
 	}
 	
 	NSDictionary *replacementInfoDictionary = [replacementDictionary objectForKey:self.replacedFontName];
-	if (! replacementInfoDictionary) {
+	if (!replacementInfoDictionary) 
+	{
 		self.offsetSlider.value = 0.f;
 		return;
 	}
@@ -194,21 +197,26 @@
 	NSString *settingsFilePath = [self settingsFilePath];
 	NSMutableDictionary *settings = [NSMutableDictionary dictionaryWithContentsOfFile:settingsFilePath] ?: [NSMutableDictionary dictionary];
 	
-	// If the replacement font was already used, remove the corresponding entry
+	// If the replacement font was already used, remove the existing entry
 	NSMutableDictionary *replacementDictionary = [NSMutableDictionary dictionaryWithDictionary:[settings objectForKey:@"ReplacementFonts"]];
-	for (NSString *replacedFontName in [replacementDictionary allKeys]) {
+	for (NSString *replacedFontName in [replacementDictionary allKeys]) 
+	{
 		NSDictionary *replacementInfoDictionary = [replacementDictionary objectForKey:replacedFontName];
-		if ([self.replacementFontName isEqualToString:[replacementInfoDictionary objectForKey:@"Name"]]) {
+		if ([self.replacementFontName isEqualToString:[replacementInfoDictionary objectForKey:@"Name"]]) 
+		{
 			[replacementDictionary removeObjectForKey:replacedFontName];
 		}
 	}
 	
+	// Save settings
 	NSDictionary *replacementInfoDictionary = nil;
-	if (self.offsetSlider.value != 0) {
+	if (self.offsetSlider.value != 0) 
+	{
 		replacementInfoDictionary = [NSDictionary dictionaryWithObjectsAndKeys:self.replacementFontName, @"Name", 
 									 [NSNumber numberWithFloat:self.offsetSlider.value], @"Offset", nil];
 	}
-	else {
+	else
+	{
 		replacementInfoDictionary = [NSDictionary dictionaryWithObjectsAndKeys:self.replacementFontName, @"Name", nil];
 	}
 	[replacementDictionary setObject:replacementInfoDictionary forKey:self.replacedFontName];

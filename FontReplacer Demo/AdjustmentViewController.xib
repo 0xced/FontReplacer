@@ -429,70 +429,6 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">font1FirstLabel</string>
-						<reference key="source" ref="841351856"/>
-						<reference key="destination" ref="974726284"/>
-					</object>
-					<int key="connectionID">46</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">font2FirstLabel</string>
-						<reference key="source" ref="841351856"/>
-						<reference key="destination" ref="426388607"/>
-					</object>
-					<int key="connectionID">47</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">font1SecondLabel</string>
-						<reference key="source" ref="841351856"/>
-						<reference key="destination" ref="229875284"/>
-					</object>
-					<int key="connectionID">48</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">font2SecondLabel</string>
-						<reference key="source" ref="841351856"/>
-						<reference key="destination" ref="233845399"/>
-					</object>
-					<int key="connectionID">49</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">font1ThirdLabel</string>
-						<reference key="source" ref="841351856"/>
-						<reference key="destination" ref="749176089"/>
-					</object>
-					<int key="connectionID">50</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">font2ThirdLabel</string>
-						<reference key="source" ref="841351856"/>
-						<reference key="destination" ref="327270560"/>
-					</object>
-					<int key="connectionID">51</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">font1FourthLabel</string>
-						<reference key="source" ref="841351856"/>
-						<reference key="destination" ref="79486392"/>
-					</object>
-					<int key="connectionID">52</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">font2FourthLabel</string>
-						<reference key="source" ref="841351856"/>
-						<reference key="destination" ref="305798610"/>
-					</object>
-					<int key="connectionID">53</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">offsetLabel</string>
 						<reference key="source" ref="841351856"/>
 						<reference key="destination" ref="411747541"/>
@@ -506,6 +442,70 @@
 						<reference key="destination" ref="597120694"/>
 					</object>
 					<int key="connectionID">61</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">replacedFontFirstLabel</string>
+						<reference key="source" ref="841351856"/>
+						<reference key="destination" ref="974726284"/>
+					</object>
+					<int key="connectionID">70</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">replacementFontFirstLabel</string>
+						<reference key="source" ref="841351856"/>
+						<reference key="destination" ref="426388607"/>
+					</object>
+					<int key="connectionID">71</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">replacedFontSecondLabel</string>
+						<reference key="source" ref="841351856"/>
+						<reference key="destination" ref="229875284"/>
+					</object>
+					<int key="connectionID">72</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">replacementFontSecondLabel</string>
+						<reference key="source" ref="841351856"/>
+						<reference key="destination" ref="233845399"/>
+					</object>
+					<int key="connectionID">73</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">replacedFontThirdLabel</string>
+						<reference key="source" ref="841351856"/>
+						<reference key="destination" ref="749176089"/>
+					</object>
+					<int key="connectionID">74</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">replacementFontThirdLabel</string>
+						<reference key="source" ref="841351856"/>
+						<reference key="destination" ref="327270560"/>
+					</object>
+					<int key="connectionID">75</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">replacedFontFourthLabel</string>
+						<reference key="source" ref="841351856"/>
+						<reference key="destination" ref="79486392"/>
+					</object>
+					<int key="connectionID">76</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">replacementFontFourthLabel</string>
+						<reference key="source" ref="841351856"/>
+						<reference key="destination" ref="305798610"/>
+					</object>
+					<int key="connectionID">77</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
@@ -664,71 +664,42 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">61</int>
+			<int key="maxID">77</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
 				<object class="IBPartialClassDescription">
 					<string key="className">AdjustmentViewController</string>
 					<string key="superclassName">UIViewController</string>
-					<object class="NSMutableDictionary" key="actions">
-						<string key="NS.key.0">settingsChanged:</string>
-						<string key="NS.object.0">id</string>
-					</object>
-					<object class="NSMutableDictionary" key="actionInfosByName">
-						<string key="NS.key.0">settingsChanged:</string>
-						<object class="IBActionInfo" key="NS.object.0">
+					<dictionary class="NSMutableDictionary" key="actions">
+						<string key="save:">id</string>
+						<string key="settingsChanged:">id</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="actionInfosByName">
+						<object class="IBActionInfo" key="save:">
+							<string key="name">save:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="settingsChanged:">
 							<string key="name">settingsChanged:</string>
 							<string key="candidateClassName">id</string>
 						</object>
-					</object>
+					</dictionary>
 					<dictionary class="NSMutableDictionary" key="outlets">
-						<string key="font1FirstLabel">UILabel</string>
-						<string key="font1FourthLabel">UILabel</string>
-						<string key="font1SecondLabel">UILabel</string>
-						<string key="font1ThirdLabel">UILabel</string>
-						<string key="font2FirstLabel">UILabel</string>
-						<string key="font2FourthLabel">UILabel</string>
-						<string key="font2SecondLabel">UILabel</string>
-						<string key="font2ThirdLabel">UILabel</string>
 						<string key="offsetLabel">UILabel</string>
 						<string key="offsetSlider">OBSlider</string>
 						<string key="pointSizeLabel">UILabel</string>
 						<string key="pointSizeSlider">UISlider</string>
+						<string key="replacedFontFirstLabel">UILabel</string>
+						<string key="replacedFontFourthLabel">UILabel</string>
+						<string key="replacedFontSecondLabel">UILabel</string>
+						<string key="replacedFontThirdLabel">UILabel</string>
+						<string key="replacementFontFirstLabel">UILabel</string>
+						<string key="replacementFontFourthLabel">UILabel</string>
+						<string key="replacementFontSecondLabel">UILabel</string>
+						<string key="replacementFontThirdLabel">UILabel</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<object class="IBToOneOutletInfo" key="font1FirstLabel">
-							<string key="name">font1FirstLabel</string>
-							<string key="candidateClassName">UILabel</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="font1FourthLabel">
-							<string key="name">font1FourthLabel</string>
-							<string key="candidateClassName">UILabel</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="font1SecondLabel">
-							<string key="name">font1SecondLabel</string>
-							<string key="candidateClassName">UILabel</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="font1ThirdLabel">
-							<string key="name">font1ThirdLabel</string>
-							<string key="candidateClassName">UILabel</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="font2FirstLabel">
-							<string key="name">font2FirstLabel</string>
-							<string key="candidateClassName">UILabel</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="font2FourthLabel">
-							<string key="name">font2FourthLabel</string>
-							<string key="candidateClassName">UILabel</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="font2SecondLabel">
-							<string key="name">font2SecondLabel</string>
-							<string key="candidateClassName">UILabel</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="font2ThirdLabel">
-							<string key="name">font2ThirdLabel</string>
-							<string key="candidateClassName">UILabel</string>
-						</object>
 						<object class="IBToOneOutletInfo" key="offsetLabel">
 							<string key="name">offsetLabel</string>
 							<string key="candidateClassName">UILabel</string>
@@ -744,6 +715,38 @@
 						<object class="IBToOneOutletInfo" key="pointSizeSlider">
 							<string key="name">pointSizeSlider</string>
 							<string key="candidateClassName">UISlider</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="replacedFontFirstLabel">
+							<string key="name">replacedFontFirstLabel</string>
+							<string key="candidateClassName">UILabel</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="replacedFontFourthLabel">
+							<string key="name">replacedFontFourthLabel</string>
+							<string key="candidateClassName">UILabel</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="replacedFontSecondLabel">
+							<string key="name">replacedFontSecondLabel</string>
+							<string key="candidateClassName">UILabel</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="replacedFontThirdLabel">
+							<string key="name">replacedFontThirdLabel</string>
+							<string key="candidateClassName">UILabel</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="replacementFontFirstLabel">
+							<string key="name">replacementFontFirstLabel</string>
+							<string key="candidateClassName">UILabel</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="replacementFontFourthLabel">
+							<string key="name">replacementFontFourthLabel</string>
+							<string key="candidateClassName">UILabel</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="replacementFontSecondLabel">
+							<string key="name">replacementFontSecondLabel</string>
+							<string key="candidateClassName">UILabel</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="replacementFontThirdLabel">
+							<string key="name">replacementFontThirdLabel</string>
+							<string key="candidateClassName">UILabel</string>
 						</object>
 					</dictionary>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">

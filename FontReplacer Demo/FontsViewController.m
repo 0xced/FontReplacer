@@ -57,7 +57,10 @@
 {
 	[super viewWillAppear:animated];
 	[UIFont setReplacementDictionary:nil];
-	[self reloadData];
+	
+	// Fixes a strange issue: If the table view is reloaded directly, fonts are not updated correctly. Doing it
+	// in the next run loop iteration fixes this issue
+	[self performSelector:@selector(reloadData) withObject:nil afterDelay:0.];
 }
 
 - (void) viewWillDisappear:(BOOL)animated

@@ -78,23 +78,21 @@ static void initializeReplacementFonts()
 	NSString *fontName = [self fontName];
 	CGFloat ascender = [self replacement_ascender];
     
-	// The receiver is not replacing any font. Return original ascender value
+	// The receiver is not replacing any font. Return the original ascender value
 	NSString *replacedFontName = [inverseReplacementDictionary objectForKey:fontName];
 	if (!replacedFontName) 
-	{
 		return ascender;
-	}
 	
-	// The receiver is replacing another font: To access the replaced font, we have to remove the replacement dictionary 
+	// The receiver is replacing another font: To access the replaced UIFont object, we have to remove the replacement dictionary 
 	// temporarily
 	NSDictionary *originalReplacementDictionary = [[[UIFont replacementDictionary] retain] autorelease];
 	[UIFont setReplacementDictionary:nil];
 	UIFont *replacedFont = [UIFont fontWithName:replacedFontName size:self.pointSize];
 	[UIFont setReplacementDictionary:originalReplacementDictionary];
 	
-	// Adjust the receiver ascender value. A good default behavior is to match the ascender value of the replacing
-	// font to match the one of the replaced font. If this default behavior is not convincing enough, an offset
-	// can be provided
+	// Adjust the receiver ascender value. A good default behavior is to have the ascender value of the replacing
+	// font match the one of the replaced font. If this default behavior is not convincing enough, an offset
+	// can be optionally provided in the plist settings
 	return [replacedFont replacement_ascender] + self.pointSize * [UIFont offsetForFontWithName:replacedFontName];
 }
 
