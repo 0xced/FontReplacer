@@ -9,6 +9,7 @@
 #import "AdjustmentViewController.h"
 
 #import "UIFont+Replacement.h"
+#import <pwd.h>
 
 @interface AdjustmentViewController ()
 
@@ -23,7 +24,9 @@
 
 - (void) loadSettings;
 - (void) saveSettings;
-- (NSString *)settingsFilePath;
+
+- (NSString *) homeDirectory;
+- (NSString *) settingsFilePath;
 
 @end
 
@@ -186,7 +189,7 @@
 	self.offsetSlider.value = [[replacementInfoDictionary objectForKey:@"Offset"] floatValue];
 }
 
-- (void)saveSettings
+- (void) saveSettings
 {
 	NSString *settingsFilePath = [self settingsFilePath];
 	NSMutableDictionary *settings = [NSMutableDictionary dictionaryWithContentsOfFile:settingsFilePath] ?: [NSMutableDictionary dictionary];
@@ -213,10 +216,21 @@
 	[settings writeToFile:settingsFilePath atomically:NO];
 }
 
+- (NSString *) homeDirectory
+{
+	NSString *logname = [NSString stringWithCString:getenv("LOGNAME") encoding:NSUTF8StringEncoding];
+	struct passwd *pw = getpwnam([logname UTF8String]);
+	return pw ? [NSString stringWithCString:pw->pw_dir encoding:NSUTF8StringEncoding] : [@"/Users" stringByAppendingPathComponent:logname];
+}
+
 - (NSString *)settingsFilePath
 {
-	NSString *documentPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
-	return [documentPath stringByAppendingPathComponent:@"Settings.plist"];
+#if TARGET_IPHONE_SIMULATOR
+	NSString *saveDirectoryPath = [NSString stringWithFormat:@"%@/Desktop/", [self homeDirectory]];
+#else
+	NSString *saveDirectoryPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+#endif	
+	return [saveDirectoryPath stringByAppendingPathComponent:@"FontReplacerSettings.plist"];
 }
 
 // MARK: - Event callbacks
