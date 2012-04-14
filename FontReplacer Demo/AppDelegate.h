@@ -6,8 +6,6 @@
 //  Copyright (c) 2011 Cédric Luthi. All rights reserved.
 //
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate, UITabBarControllerDelegate>
-
-@property (nonatomic, retain) NSDictionary *originalReplacementDictionary;
+@interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @end

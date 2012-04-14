@@ -7,16 +7,25 @@
 //
 
 #import "FontsViewController.h"
-#import "ComparatorViewController.h"
+
+#import "AdjustmentViewController.h"
+#import "UIFont+Replacement.h"
+
+@interface FontsViewController ()
+
+- (void) reloadData;
+
+@end
 
 @implementation FontsViewController
 
 - (id) init
 {
-	if (!(self = [self initWithStyle:UITableViewStylePlain]))
+	if (!(self = [super initWithStyle:UITableViewStylePlain]))
 		return nil;
 	
 	familyNames = [[[UIFont familyNames] sortedArrayUsingSelector:@selector(localizedCompare:)] retain];
+	self.title = @"Replacement font";
 	
 	return self;
 }
@@ -25,6 +34,48 @@
 {
 	[familyNames release];
 	[super dealloc];
+}
+
+// MARK: - Accessors and mutators
+
+@synthesize replacementFontName = _replacementFontName;
+
+- (void) setReplacementFontName:(NSString *)replacementFontName
+{
+	if (_replacementFontName == replacementFontName) 
+		return;
+	
+	[_replacementFontName release];
+	_replacementFontName = [replacementFontName retain];
+	
+	[self reloadData];
+}
+
+// MARK: - View lifecycle
+
+- (void) viewWillAppear:(BOOL)animated
+{
+	[super viewWillAppear:animated];
+	[UIFont setReplacementDictionary:nil];
+	
+	// Fixes a strange issue: If the table view is reloaded directly, fonts are not updated correctly. Doing it
+	// in the next run loop iteration fixes this issue
+	[self performSelector:@selector(reloadData) withObject:nil afterDelay:0.];
+}
+
+- (void) viewWillDisappear:(BOOL)animated
+{
+	[super viewWillDisappear:animated];
+	NSDictionary *plistDictionary = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"ReplacementFonts"];
+	[UIFont setReplacementDictionary:plistDictionary];
+}
+
+// MARK: - Reloading the screen
+
+- (void) reloadData
+{
+	self.title = self.replacementFontName ? @"Replaced font" : @"Replacement font";
+	[self.tableView reloadData];
 }
 
 // MARK: - Table View
@@ -88,8 +139,18 @@
 {
 	NSString *fontName = [self fontNameAtIndexPath:indexPath];
 	
-	ComparatorViewController *comparatorViewController = [[ComparatorViewController alloc] initWithFontName:fontName];
-	[self.navigationController pushViewController:comparatorViewController animated:YES];
+	if (self.replacementFontName) 
+	{
+		AdjustmentViewController *adjustmentViewController = [[[AdjustmentViewController alloc] initWithReplacedFontName:fontName
+																									 replacementFontName:self.replacementFontName] autorelease];
+		[self.navigationController pushViewController:adjustmentViewController animated:YES];
+	}
+	else
+	{
+		FontsViewController *fontsViewController = [[[FontsViewController alloc] init] autorelease];
+		fontsViewController.replacementFontName = fontName;
+		[self.navigationController pushViewController:fontsViewController animated:YES];
+	}
 }
 
 @end

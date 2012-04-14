@@ -13,4 +13,6 @@
 	NSArray *familyNames;
 }
 
+@property (nonatomic, retain) NSString *replacementFontName;
+
 @end
