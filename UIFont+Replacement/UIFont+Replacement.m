@@ -15,10 +15,8 @@ static NSDictionary *replacementDictionary = nil;
 
 static void initializeReplacementFonts()
 {
-	static BOOL initialized = NO;
-	if (initialized)
+	if (replacementDictionary)
 		return;
-	initialized = YES;
 	
 	NSDictionary *replacementDictionary = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"ReplacementFonts"];
 	[UIFont setReplacementDictionary:replacementDictionary];
@@ -28,13 +26,19 @@ static void initializeReplacementFonts()
 {
 	Method fontWithName_size_ = class_getClassMethod([UIFont class], @selector(fontWithName:size:));
 	Method fontWithName_size_traits_ = class_getClassMethod([UIFont class], @selector(fontWithName:size:traits:));
+    Method fontWithDescriptor_size_ = class_getClassMethod([UIFont class], @selector(fontWithDescriptor:size:));
+    
 	Method replacementFontWithName_size_ = class_getClassMethod([UIFont class], @selector(replacement_fontWithName:size:));
 	Method replacementFontWithName_size_traits_ = class_getClassMethod([UIFont class], @selector(replacement_fontWithName:size:traits:));
-	
+	Method replacementFontWithDescriptor_size_ = class_getClassMethod([UIFont class], @selector(replacement_fontWithDescriptor:size:));
+    
 	if (fontWithName_size_ && replacementFontWithName_size_ && strcmp(method_getTypeEncoding(fontWithName_size_), method_getTypeEncoding(replacementFontWithName_size_)) == 0)
 		method_exchangeImplementations(fontWithName_size_, replacementFontWithName_size_);
 	if (fontWithName_size_traits_ && replacementFontWithName_size_traits_ && strcmp(method_getTypeEncoding(fontWithName_size_traits_), method_getTypeEncoding(replacementFontWithName_size_traits_)) == 0)
 		method_exchangeImplementations(fontWithName_size_traits_, replacementFontWithName_size_traits_);
+    if (fontWithDescriptor_size_ && replacementFontWithDescriptor_size_ && strcmp(method_getTypeEncoding(fontWithDescriptor_size_), method_getTypeEncoding(replacementFontWithDescriptor_size_)) == 0){
+        method_exchangeImplementations(fontWithDescriptor_size_, replacementFontWithDescriptor_size_);
+    }
 }
 
 + (UIFont *) replacement_fontWithName:(NSString *)fontName size:(CGFloat)fontSize
@@ -49,6 +53,12 @@ static void initializeReplacementFonts()
 	initializeReplacementFonts();
 	NSString *replacementFontName = [replacementDictionary objectForKey:fontName];
 	return [self replacement_fontWithName:replacementFontName ?: fontName size:fontSize traits:traits];
+}
+
++ (UIFont *) replacement_fontWithDescriptor:(UIFontDescriptor*)descriptor size:(CGFloat)fontSize{
+    initializeReplacementFonts();
+	NSString *replacementFontName = [replacementDictionary objectForKey:[descriptor.fontAttributes objectForKey:UIFontDescriptorNameAttribute]];
+    return [self replacement_fontWithDescriptor:[UIFontDescriptor fontDescriptorWithName:replacementFontName ?: [descriptor.fontAttributes objectForKey:UIFontDescriptorNameAttribute] size:fontSize] size:fontSize];
 }
 
 + (NSDictionary *) replacementDictionary
