@@ -30,11 +30,17 @@ static void initializeReplacementFonts()
 	Method fontWithName_size_traits_ = class_getClassMethod([UIFont class], @selector(fontWithName:size:traits:));
 	Method replacementFontWithName_size_ = class_getClassMethod([UIFont class], @selector(replacement_fontWithName:size:));
 	Method replacementFontWithName_size_traits_ = class_getClassMethod([UIFont class], @selector(replacement_fontWithName:size:traits:));
+    
+    Method fontWithDescriptor_size_ = class_getClassMethod([UIFont class], @selector(fontWithDescriptor:size:));
+    Method replacementFontWithDescriptor_size_ = class_getClassMethod([UIFont class], @selector(replacement_fontWithDescriptor:size:));
 	
 	if (fontWithName_size_ && replacementFontWithName_size_ && strcmp(method_getTypeEncoding(fontWithName_size_), method_getTypeEncoding(replacementFontWithName_size_)) == 0)
 		method_exchangeImplementations(fontWithName_size_, replacementFontWithName_size_);
 	if (fontWithName_size_traits_ && replacementFontWithName_size_traits_ && strcmp(method_getTypeEncoding(fontWithName_size_traits_), method_getTypeEncoding(replacementFontWithName_size_traits_)) == 0)
 		method_exchangeImplementations(fontWithName_size_traits_, replacementFontWithName_size_traits_);
+    
+    if (fontWithDescriptor_size_ && replacementFontWithDescriptor_size_ && strcmp(method_getTypeEncoding(fontWithDescriptor_size_), method_getTypeEncoding(replacementFontWithDescriptor_size_)) == 0)
+        method_exchangeImplementations(fontWithDescriptor_size_, replacementFontWithDescriptor_size_);
 }
 
 + (UIFont *) replacement_fontWithName:(NSString *)fontName size:(CGFloat)fontSize
@@ -87,6 +93,15 @@ static void initializeReplacementFonts()
 		if (!font)
 			NSLog(@"WARNING: replacement font '%@' is not available.", fontName);
 	}
+}
+
++ (UIFont *)replacement_fontWithDescriptor:(UIFontDescriptor *)descriptor size:(CGFloat)pointSize
+{
+    initializeReplacementFonts();
+    NSString *originalFontName = descriptor.fontAttributes[UIFontDescriptorNameAttribute];
+    NSString *replacementFontName = replacementDictionary[originalFontName];
+    UIFontDescriptor *newDescriptor = [descriptor fontDescriptorByAddingAttributes:@{UIFontDescriptorNameAttribute: replacementFontName}];
+    return [self replacement_fontWithDescriptor:newDescriptor size:pointSize];
 }
 
 @end
