@@ -1,1 +1,0 @@
-Free for personal use as well as commercial use. Donations appreciated, nymphont@yahoo.com
