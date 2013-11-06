@@ -1,5 +1,3 @@
-## About
-
 **FontReplacer** has been discontinued. If you want to work with custom fonts directly in Interface Builder, I suggest you to use [MoarFonts](http://pitaya.ch/moarfonts/) which is much better since:
 
 1. It works on iOS 7
